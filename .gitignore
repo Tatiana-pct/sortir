@@ -1,4 +1,4 @@
-#ignorer la config de php
+#ignorer les reglage de phpstrom
 /.idea/
 ###> symfony/framework-bundle ###
 /.env.local
