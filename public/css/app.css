@@ -1,4 +1,42 @@
 body{
-    background-color: gray;
+    margin-width:100vh;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
     font-family: 'Rampart One', cursive;
+    background-color: gray;
+
 }
+header {
+
+    color: whitesmoke;
+    padding: 1rem 0;
+}
+
+
+header nav a {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+header nav a:hover {
+    color: #5eb5e0;
+    cursor: pointer;
+}
+.header-logo {
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+.header-logo img {
+    max-width: 42px;
+    margin-right: 5px;
+}
+
+footer {
+    padding: 2rem 0;
+    text-align: center;
+    background-color: black;
+    color: whitesmoke;
+}
+
