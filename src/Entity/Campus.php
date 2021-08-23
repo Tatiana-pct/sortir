@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\VilleRepository;
+use App\Repository\CampusRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=VilleRepository::class)
+ * @ORM\Entity(repositoryClass=CampusRepository::class)
  */
-class Ville
+class Campus
 {
     /**
      * @ORM\Id
@@ -18,14 +18,9 @@ class Ville
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=30)
      */
     private $nom;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $codePostal;
 
     public function getId(): ?int
     {
@@ -40,18 +35,6 @@ class Ville
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getCodePostal(): ?string
-    {
-        return $this->codePostal;
-    }
-
-    public function setCodePostal(string $codePostal): self
-    {
-        $this->codePostal = $codePostal;
 
         return $this;
     }
