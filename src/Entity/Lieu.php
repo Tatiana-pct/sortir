@@ -40,6 +40,12 @@ class Lieu
     private $longitude;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="lieux")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ville;
+
+    /**
      * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="Lieu")
      */
     private $sorties;
@@ -128,6 +134,18 @@ class Lieu
                 $sorty->setLieu(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): self
+    {
+        $this->ville = $ville;
 
         return $this;
     }
