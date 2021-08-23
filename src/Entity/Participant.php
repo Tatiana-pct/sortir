@@ -40,7 +40,7 @@ class Participant
     /**
      * @ORM\Column(type="text")
      */
-    private $motDePasse,
+    private $motDePasse;
 
     /**
      * @ORM\Column(type="boolean")
