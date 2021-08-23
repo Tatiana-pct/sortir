@@ -23,7 +23,7 @@ class Lieu
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=250, nullable=true)
      */
     private $rue;
 
