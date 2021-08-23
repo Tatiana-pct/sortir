@@ -27,7 +27,9 @@ header a {
 }
 
 header nav a:hover {
+    background-color: ivory;
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .header-logo {
