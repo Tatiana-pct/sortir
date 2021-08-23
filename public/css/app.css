@@ -10,9 +10,11 @@ body{
 
 
 header {
-    background-color: ivory;
+    background-color: #538fc6;
     padding: 1rem 0;
 }
+
+
 header h1 {
     margin: 0 0 10px 0;
 }
@@ -63,7 +65,7 @@ body> .container{
 footer {
     padding: 2rem 0;
     text-align: center;
-    background-color: ivory;
-    color: #73b5dc;
+    background-color: #538fc6;
+    color: black;
 }
 
