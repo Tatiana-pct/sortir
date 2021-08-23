@@ -4,23 +4,23 @@ body{
     margin: 0;
     padding: 0;
     font-family: 'Rampart One', cursive;
-    background-color: gray;
+    background-color: ivory;
 
 }
 header {
 
-    color: whitesmoke;
+    color: black;
     padding: 1rem 0;
 }
 
 
 header nav a {
     text-decoration: none;
-    color: whitesmoke;
+    color: #73b5dc;
 }
 
 header nav a:hover {
-    color: #5eb5e0;
+    color: black;
     cursor: pointer;
 }
 .header-logo {
@@ -36,7 +36,7 @@ header nav a:hover {
 footer {
     padding: 2rem 0;
     text-align: center;
-    background-color: black;
-    color: whitesmoke;
+    background-color: ivory;
+    color: #73b5dc;
 }
 
