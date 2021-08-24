@@ -62,13 +62,18 @@ main {
     padding: 1rem 0;
     background-color:ivory;
 }
-label {
+label
+{
+    padding: 1.5px;
     display: block;
     margin: 8px;
 }
+
 input,
-textarea{
-    margin-bottom: 2rem;
+textarea
+
+{
+    margin-bottom: 3rem;
     box-sizing: border-box;
     width: 150px;
     max-width: 50%;

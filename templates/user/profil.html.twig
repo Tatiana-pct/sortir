@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+
+{% block body %}
+    <div class="profil">
+    <h2>Profil de {{ app.user.firstname }}  {{ app.user.lastname }}</h2>
+    <h2>Pseudo : {{ app.user.username }} </h2>
+    <h2>Nom : {{ app.user.firstname }}</h2>
+    <h2>Prénom : {{ app.user.lastname }}</h2>
+    <h2>Telephone : {{ app.user.phone }}</h2>
+    <h2>Email : {{ app.user.email }}</h2>
+   {#  <h2>Mot de passe : {{ app.user.password }}</h2>#}
+    <h2>Confirmation :</h2>
+    <h2>Campus : {{ app.user.school }}</h2>
+    <h2>Ma photo : </h2>
+    </div>
+
+{% endblock %}
+
