@@ -4,9 +4,11 @@
     <h2>Cree un utilisateur</h2>
 
     {{ form_start(registrationForm) }}
+
     {{ form_widget(registrationForm) }}
+
+    <button type="submit" class="btn"> S'enregistrer </button>
     {{ form_end(registrationForm) }}
-    <button> S'enregistrer </button>
 {% endblock %}
 
 {% block title %}Register | {{ parent() }}{% endblock %}
