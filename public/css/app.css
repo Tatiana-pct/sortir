@@ -62,6 +62,18 @@ main {
     padding: 1rem 0;
     background-color:ivory;
 }
+label {
+    display: block;
+    margin: 5px;
+}
+input,
+textarea,
+select {
+    margin-bottom: 2rem;
+    box-sizing: border-box;
+    width: 150px;
+    max-width: 50%;
+}
 
 body> .container{
     display: flex;
