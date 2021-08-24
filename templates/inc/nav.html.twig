@@ -9,8 +9,13 @@
 
         {% if app.User %}
 
-        <li><a href="{{ path('app_register') }}" title="Login">Cree un utilisateur</a></li>
+
         <li><a href="{{ path('app_logout') }}" title="Logout">Se deconnecter ({{ app.User.firstname }})</a></li>
+
+            {% if is_granted("ROLE_ADMIN") %}
+                <li><a href="{{ path('app_register') }}" title="Login">Cree un utilisateur</a></li>
+                <li><a class="dashboard" href="{{ path('admin_dashboard') }}" title="Admin dashboard">AdminDashboard</a></li>
+            {% endif %}
 
         {%else  %}
 
