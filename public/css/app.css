@@ -64,16 +64,16 @@ main {
 }
 label {
     display: block;
-    margin: 5px;
+    margin: 8px;
 }
 input,
-textarea,
-select {
+textarea{
     margin-bottom: 2rem;
     box-sizing: border-box;
     width: 150px;
     max-width: 50%;
 }
+
 
 body> .container{
     display: flex;
