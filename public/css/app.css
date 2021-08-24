@@ -62,14 +62,15 @@ main {
     padding: 1rem 0;
     background-color:ivory;
 }
-label,remember
+label
 {
     padding: 1.5px;
     display: block;
     margin: 8px;
 }
+
 input,
-textarea,
+textarea
 
 {
     margin-bottom: 3rem;
