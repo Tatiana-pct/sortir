@@ -13,12 +13,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rampart+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('image/logo-eni-ecole.png') }}">
+    <link rel="icon" href="{{ asset('image/logo-eni-ecole.png') }}">
 </head>
 <body>
 <div class="container">
 
     <header>
-        <h1><a href="{{ path('main_home') }}"><img src="{{ asset('image/logo-eni-ecole.png') }}" alt="ENI"></a></h1>
+        <div class="logo">
+            <div>
+                <img src="{{asset('image/images.png')}}">
+            </div>
         <div class="link">{% include('inc/nav.html.twig') %}</div>
     </header>
 
