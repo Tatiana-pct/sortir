@@ -65,15 +65,11 @@ class Participant implements UserInterface
      */
     private $campus;
 
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Pseudo;
+    private $pseudo;
 
     public function __construct()
     {
@@ -207,30 +203,25 @@ class Participant implements UserInterface
 
     public function getRoles(): array
     {
-        return  $this->roles;
+        return  $this->administrateur ? ['ROLE_ADMIN'] : ['ROLE_USER'];
     }
 
     public function getSalt()
     {
-        // TODO: Implement getSalt() method.
+       return null;
     }
 
     public function getUsername()
     {
-        // TODO: Implement getUsername() method.
+        return $this->pseudo;
     }
 
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+
     }
 
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
 
-        return $this;
-    }
 
     public function getPseudo(): ?string
     {
@@ -246,6 +237,6 @@ class Participant implements UserInterface
 
     public function getPassword()
     {
-        // TODO: Implement getPassword() method.
+        return $this->motDePasse;
     }
 }

@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParticipantController extends AbstractController
 {
     /**
-     * @Route("/", name="user_profile")
+     * @Route("/", name="participant_profile")
      */
     public function profil()
     {
