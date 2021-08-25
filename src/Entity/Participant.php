@@ -6,11 +6,12 @@ use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
  */
-class Participant
+class Participant implements UserInterface
 {
     /**
      * @ORM\Id
@@ -63,6 +64,12 @@ class Participant
      * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="participants")
      */
     private $campus;
+
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $pseudo;
 
     public function __construct()
     {
@@ -192,5 +199,44 @@ class Participant
         $this->campus = $campus;
 
         return $this;
+    }
+
+    public function getRoles(): array
+    {
+        return  $this->administrateur ? ['ROLE_ADMIN'] : ['ROLE_USER'];
+    }
+
+    public function getSalt()
+    {
+       return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->pseudo;
+    }
+
+    public function eraseCredentials()
+    {
+
+    }
+
+
+
+    public function getPseudo(): ?string
+    {
+        return $this->Pseudo;
+    }
+
+    public function setPseudo(string $Pseudo): self
+    {
+        $this->Pseudo = $Pseudo;
+
+        return $this;
+    }
+
+    public function getPassword()
+    {
+        return $this->motDePasse;
     }
 }

@@ -58,7 +58,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/create", name="create")
      */
-    public function create(Request $request): Response
+    public function create(Request $request,EntityManagerInterface $em): Response
     {
         //FORMULAIRE CREATION SORTIE
         $sortie = new Sortie();
@@ -70,14 +70,21 @@ class SortieController extends AbstractController
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             $manager = $this->getDoctrine()->getManager();
 
+            if($sortieForm->get('enregistrer')->isClicked()){
+               $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Créée']));
+                $this->addFlash('success', "La sortie a créée!");
+            } elseif ($sortieForm->get('publier')->isClicked()){
+                $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
+                $this->addFlash('warning', "La sortie a été publiée !");
+            } elseif ($sortieForm->get('annuler')->isClicked()){
+                $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']));
+                $this->addFlash('warning', "La sortie a été annulée !");
+                return $this->redirectToRoute('sortie_liste');
+            }
 
-            //$sortie->setCampus();
-            //$sortie->setEtat();
 
             $manager->persist($sortie);
             $manager->flush();
-
-
         }
 
         return $this->render('sortie/create.html.twig', [

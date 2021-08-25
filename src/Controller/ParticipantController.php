@@ -9,15 +9,15 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/profil")
  */
-class UserController extends AbstractController
+class ParticipantController extends AbstractController
 {
     /**
-     * @Route("/", name="user_profile", requirements={"id": "\d+"})
+     * @Route("/", name="participant_profile")
      */
     public function profil()
     {
 
-        return $this->render('user/profil.html.twig');
+        return $this->render('participant/profil.html.twig');
     }
 
 }

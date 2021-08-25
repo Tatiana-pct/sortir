@@ -2,13 +2,16 @@
 
 namespace App\Form;
 
+use App\Entity\Campus;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -36,7 +39,10 @@ class SortieFormType extends AbstractType
             ->add('duree',
                   IntegerType::class,
                   [
-                      'label' => 'Durée'
+                      'label' => 'Durée',
+                      'attr' => [
+                          'min' => '1',
+                          'max' => '100']
                   ])
 
             ->add('dateLimiteInscription',
@@ -63,6 +69,14 @@ class SortieFormType extends AbstractType
                       'label' => "Description et infos"
                   ])
 
+            ->add('campus',
+                  EntityType::class, [
+                      'class' => Campus::class,
+                      'choice_label' => 'nom',
+                      'query_builder' => function(EntityRepository $repository) {
+                          return $repository->createQueryBuilder('c')->orderBy('c.nom', 'ASC');
+                      }])
+
             ->add('Lieu',
                   EntityType::class,
                   [
@@ -70,6 +84,16 @@ class SortieFormType extends AbstractType
                       'class' => Lieu::class,
                       'choice_label' => 'nom',
                   ])
+            ->add('enregistrer', SubmitType::class, [
+                'label' => 'Enregistrer',
+
+            ])
+            ->add('publier', SubmitType::class, [
+                'label' => 'Publier la sortie',
+            ])
+            ->add('annuler', SubmitType::class, [
+                'label' => 'Annuler',
+            ])
         ;
     }
 
