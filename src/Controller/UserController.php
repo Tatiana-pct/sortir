@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/", name="user_profile", requirements={"id": "\d+"})
+     * @Route("/", name="user_profile")
      */
     public function profil()
     {
