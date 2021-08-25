@@ -21,6 +21,7 @@ class ParticipantType extends AbstractType
             ->add('actif')
             ->add('sortie')
             ->add('campus')
+
         ;
     }
 
