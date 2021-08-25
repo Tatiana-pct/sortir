@@ -2,14 +2,13 @@
 
 namespace App\Security;
 
-use App\Entity\Participant;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Security;
@@ -61,20 +60,20 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
         return $credentials;
     }
 
-    public function getParticipant($credentials, ParticipantProviderInterface $ParticipantProvider)
+    public function getUser($credentials, UserProviderInterface $userProvider)
     {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
 
-        $participant = $this->entityManager->getRepository(Participant::class)->findOneBy(['email' => $credentials['email']]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
-        if (!$participant) {
+        if (!$user) {
             throw new UsernameNotFoundException('Yes could not be found.');
         }
 
-        return $participant;
+        return $user;
     }
 
     public function checkCredentials($credentials, UserInterface $user)
@@ -103,10 +102,5 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
     protected function getLoginUrl()
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
-    }
-
-    public function getUser($credentials, UserProviderInterface $userProvider)
-    {
-        // TODO: Implement getUser() method.
     }
 }
