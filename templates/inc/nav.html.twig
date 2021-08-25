@@ -7,7 +7,7 @@
         <li><a href="#" title="Campus">Campus</a></li>
         <li><a href="{{ path('user_profile') }}" title="Profil">Mon profil</a></li>
 
-        {% if app.User %}
+        {% if app.user %}
 
 
         <li><a href="{{ path('app_logout') }}" title="Logout">Se deconnecter ({{ app.User.firstname }})</a></li>
