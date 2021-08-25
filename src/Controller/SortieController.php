@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\Sortie;
+use App\Form\FilterSortieType;
 use App\Form\SortieFormType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -42,7 +43,7 @@ class SortieController extends AbstractController
         $sortiesTerminees = $entityManager->getRepository(Sortie::class)->findBy(['etat' =>$etatTerminee]);
         $sortiesArchivees = $entityManager->getRepository(Sortie::class)->findBy(['etat' =>$etatArchivee]);
 
-        return $this->render('home.html.twig', [
+        return $this->render('main/home.html.twig', [
             'nomController' => 'SortieController',
             'sortiesCréees' => $sortiesCrees,
             'sortiesPubliées' => $sortiesPubliees,
@@ -59,6 +60,7 @@ class SortieController extends AbstractController
      */
     public function create(Request $request): Response
     {
+        //FORMULAIRE CREATION SORTIE
         $sortie = new Sortie();
         $sortieForm = $this->createForm(SortieFormType::class, $sortie);
 
