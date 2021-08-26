@@ -11,7 +11,7 @@ body{
 
 header {
     background-color: #26ade7;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
 }
 
 
@@ -24,6 +24,7 @@ header a {
 
     text-decoration: none;
     color: inherit;
+
 }
 
 header nav a:hover {
@@ -38,8 +39,9 @@ header nav a:hover {
 }
 
 .header-logo img {
-    max-width: 42px;
-    margin-right: 5px;
+    max-width: 20px;
+    margin-right: 3px;
+    margin-top: 3px;
 }
 
 .header-nav {
@@ -51,10 +53,13 @@ nav ul{
     display: flex;
     list-style: none;
     padding-left: 0;
+    justify-content: right;
+
 }
 nav li{
 
     margin-right: 1rem;
+
 }
 
 main {
