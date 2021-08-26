@@ -6,10 +6,12 @@ use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class Participant implements UserInterface
 {
@@ -36,11 +38,12 @@ class Participant implements UserInterface
     private $telephone;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $mail;
+    private $email;
 
     /**
+     * @var string The hashed password
      * @ORM\Column(type="text")
      */
     private $motDePasse;
@@ -65,11 +68,22 @@ class Participant implements UserInterface
      */
     private $campus;
 
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $pseudo;
+    private $Pseudo;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist","remove"})
+     */
+    private $image;
+
+
 
     public function __construct()
     {
@@ -117,18 +131,21 @@ class Participant implements UserInterface
         return $this;
     }
 
-    public function getMail(): ?string
+    public function getEmail(): ?string
     {
-        return $this->mail;
+        return $this->email;
     }
 
-    public function setMail(string $mail): self
+    public function setEmail(string $email): self
     {
-        $this->mail = $mail;
+        $this->email = $email;
 
         return $this;
     }
 
+    /**
+     * @see UserInterface
+     */
     public function getMotDePasse(): ?string
     {
         return $this->motDePasse;
@@ -201,42 +218,103 @@ class Participant implements UserInterface
         return $this;
     }
 
+    /**
+     * @see UserInterface
+     */
     public function getRoles(): array
     {
-        return  $this->administrateur ? ['ROLE_ADMIN'] : ['ROLE_USER'];
+        return  $this->roles;
     }
 
+    /**
+     * @see UserInterface
+     */
     public function getSalt()
     {
-       return null;
+        return null;
     }
 
-    public function getUsername()
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
     {
-        return $this->pseudo;
+        return (string) $this->email;
     }
 
+    /**
+     * @see UserInterface
+     */
     public function eraseCredentials()
     {
-
+        // TODO: Implement eraseCredentials() method.
     }
 
-
-
-    public function getPseudo(): ?string
+    public function setRoles(array $roles): self
     {
-        return $this->pseudo;
-    }
-
-    public function setPseudo(string $pseudo): self
-    {
-        $this->Pseudo = $pseudo;
+        $this->roles = $roles;
 
         return $this;
     }
 
+    public function getPseudo(): ?string
+    {
+        return $this->Pseudo;
+    }
+
+    public function setPseudo(string $Pseudo): self
+    {
+        $this->Pseudo = $Pseudo;
+
+        return $this;
+    }
+    /**
+     * @see UserInterface
+     */
     public function getPassword()
     {
         return $this->motDePasse;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setFirstName(?string $firstName): self
+    {
+        $this->prenom = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setLastName(?string $lastName): self
+    {
+        $this->nom = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image): void
+    {
+        $this->image = $image;
     }
 }

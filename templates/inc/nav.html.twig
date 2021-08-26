@@ -1,30 +1,20 @@
 <nav>
     <ul>
-
-
-        <li><a href="{{ path('main_home') }}" title="Home">Acceuil</a></li>
-        <li><a href="{{ path('villes_liste') }}" title="Ville">Ville</a></li>
-        <li><a href="{{ path('campus_liste') }}" title="Campus">Campus</a></li>
-        <li><a href="{{ path('participant_profile') }}" title="Profil">profil</a></li>
-
         {% if app.user %}
-
-
-        <li><a href="{{ path('app_logout') }}" title="Logout">Se deconnecter ({{ app.user.nom }})</a></li>
-
+            <li><a href="{{ path('app_logout') }}" title="Logout">Se déconnecter ({{ app.User.firstname }})</a></li>
+            <li><a href="{{ path('participant_details',{'id':app.user.id}) }}" title="Details">Mon compte </a></li>
+            <li><a href="{{ path('villes_liste') }}" title="Ville">Ville</a></li>
+            <li><a href="{{ path('campus_liste') }}" title="Campus">Campus</a></li>
             {% if is_granted("ROLE_ADMIN") %}
-                <li><a href="{{ path('app_register') }}" title="Login">Cree un Participant</a></li>
+                <li><a href="{{ path('participant_list') }}" title="Liste Participant">Liste des participants</a></li>
+                <li><a href="{{ path('app_register') }}" title="Login">Cree un utilisateur</a></li>
+                <li><a href="{{ path('sortie_create') }}">Créer une sortie</a> </li>
+
                 <li><a class="dashboard" href="{{ path('admin_dashboard') }}" title="Admin dashboard">AdminDashboard</a></li>
-
             {% endif %}
-
-        {%else  %}
-
-        <li><a href="{{ path('app_login') }}" title="Login">Se Connecter</a></li>
-
+        {% else  %}
+            <li><a href="{{ path('app_login') }}" title="Login">Se Connecter</a></li>
         {% endif %}
-        <li><a href="{{ path('sortie_create') }}">Créer une sortie</a> </li>
-
 
     </ul>
 </nav>

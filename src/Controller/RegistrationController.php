@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\Participant;
 use App\Form\RegistrationFormType;
 use App\Security\AppAuthenticator;
@@ -17,30 +18,53 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthenticator $authenticator): Response
+    public function register(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        GuardAuthenticatorHandler $guardHandler,
+        AppAuthenticator $authenticator,
+        Sender $sender): Response
     {
-        $user = new Participant();
-        $user->setAdministrateur(false);
+        $participant = new Participant();
 
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        if ($participant->getAdministrateur()==1) {
+            $participant->setRoles(["ROLE_ADMIN"]);
+        } else {
+            $participant->setRoles(["ROLE_USER"]);
+        }
+
+        $participant->setActif(1);
+        $form = $this->createForm(RegistrationFormType::class, $participant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setMotDePasse(
+            $participant->setMotDePasse(
                 $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
+                    $participant,
+                    $form->get('motDePasse')->getData()
                 )
             );
-
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
+            //gestion image
+
+            $file=$form->get('image')->getData()->getFile();
+            $nomImage = md5(uniqid()). '.'.$participant->getPseudo(). '.' .$file->guessExtension();
+
+            $file->move('../public/image/imagesProfil', $nomImage);
+
+            $image= new Image();
+            $image->setNom($nomImage);
+
+
+            $participant->setImage($image);
+
+            $entityManager->persist($participant);
             $entityManager->flush();
             // do anything else you need here, like send an email
+            $sender->sendNewUserNotificationToAdmin($participant);
 
             return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
+                $participant,
                 $request,
                 $authenticator,
                 'main' // firewall name in security.yaml

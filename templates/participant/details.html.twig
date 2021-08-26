@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ participant.pseudo }} | {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    <div>
+        <div>
+            <h2> {{ participant.pseudo }}</h2>
+            <div>Prénom : {{ participant.prenom }}</div>
+            <div>Nom : {{ participant.nom }}</div>
+            <div>Téléphone : {{ participant.telephone }}</div>
+            <div>Email : {{ participant.email }}</div>
+            <div>Campus : {{ participant.campus.nom }}</div>
+            <div>
+                <button><a href="{{ path('main_home') }}">Retour</a></button>
+                {% if is_granted("ROLE_ADMIN") %} {# and not participant.id==user.id#}
+
+                <a href="{{ path('participant_delete',{'id':participant.id})}}" title="Supprimer participant"><button>Supprimer</button></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

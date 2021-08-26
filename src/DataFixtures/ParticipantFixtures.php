@@ -7,6 +7,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\User;
 
 class ParticipantFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -27,7 +28,8 @@ class ParticipantFixtures extends Fixture implements DependentFixtureInterface
         $user->setPrenom('admin');
         $user->setNom('admin');
         $user->setPseudo('admin');
-        $user->setMail('admin@admin.com');
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setEmail('admin@admin.com');
         $user->setTelephone('0000000000');
         $password = $this->encoder->encodePassword($user, 'admin');
         $user->setMotDePasse($password);
@@ -43,7 +45,8 @@ class ParticipantFixtures extends Fixture implements DependentFixtureInterface
         $user->setPrenom('user');
         $user->setNom('user');
         $user->setPseudo('user');
-        $user->setMail('user@user.com');
+        $user->setEmail('user@user.com');
+        $user->setRoles(['ROLE_USER']);
         $password = $this->encoder->encodePassword($user, 'user');
         $user->setMotDePasse($password);
         $user->setTelephone('0000000000');
