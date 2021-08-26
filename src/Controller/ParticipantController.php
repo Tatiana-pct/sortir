@@ -20,4 +20,8 @@ class ParticipantController extends AbstractController
         return $this->render('participant/profil.html.twig');
     }
 
+    public function create()
+    {
+
+    }
 }
