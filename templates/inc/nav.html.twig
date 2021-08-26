@@ -3,8 +3,8 @@
 
 
         <li><a href="{{ path('main_home') }}" title="Home">Acceuil</a></li>
-        <li><a href="#" title="Ville">Ville</a></li>
-        <li><a href="#" title="Campus">Campus</a></li>
+        <li><a href="{{ path('villes_liste') }}" title="Ville">Ville</a></li>
+        <li><a href="{{ path('campus_liste') }}" title="Campus">Campus</a></li>
         <li><a href="{{ path('participant_profile') }}" title="Profil">Mon profil</a></li>
 
         {% if app.user %}
