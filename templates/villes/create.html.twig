@@ -1,9 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
 
-{% endblock %}
 
 {% block body %}
     <h2>ceci est la page creation des villes</h2>
+  {#  <h2>Ajouter une ville</h2>
+    {{ form_start(villeForm) }}
+    {{ form_widget(villeForm) }}
+   <button class="btn btn-primary">Ajouter</button></a>
+    {{ form_end(villeForm) }}#}
+
+{% endblock %}
+
+{% block title %}
+     Ajouter une ville
 {% endblock %}
