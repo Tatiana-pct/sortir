@@ -5,16 +5,23 @@
         <table>
 
             <tr>
+                <th>Image</th>
                 <th>Pseudo</th>
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Email</th>
                 <th>Rôle</th>
 
+
             </tr>
 
             {% for participant in participants %}
             <tr>
+                <td> {% if participant.image.nom is defined %}
+                        <img class="imgProfilListe" src="{{ asset('image/imagesProfil/')~participant.image.nom }}" alt="Image de profil de {{ participant.pseudo }}" >
+                    {% else %}
+                        <p>Pas de photo</p>
+                    {% endif %}</td>
                 <td><a href="{{ path('participant_details', {'id': participant.id}) }}"> {{ participant.pseudo }}</td>
                 <td>{{ participant.nom }}</td>
                 <td>{{ participant.prenom }}</td>

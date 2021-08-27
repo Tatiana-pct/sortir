@@ -113,4 +113,14 @@ footer {
     background-color: #26ade7;
     color: black;
 }
+.imgProfil
+{
+    width: 200px;
+    height: auto;
 
+}
+.imgProfilListe
+{
+    width: 100px;
+    height: auto;
+}
