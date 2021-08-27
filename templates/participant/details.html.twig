@@ -10,7 +10,7 @@
         <article>
             {% if participant.image.nom is defined %}
                 <img class="imgProfil" src="{{ asset('image/imagesProfil/')~participant.image.nom }}" alt="Image de profil de {{ participant.pseudo }}" >
-                {% else %}
+            {% else %}
                 <p>Pas de photo de profil</p>
             {% endif %}
         </article>
@@ -22,10 +22,12 @@
             <div>Email : {{ participant.email }}</div>
             <div>Campus : {{ participant.campus.nom }}</div>
             <div>
-                <button><a href="{{ path('main_home') }}">Retour</a></button>
-                {% if is_granted("ROLE_ADMIN") %} {# and not participant.id==user.id#}
+                {#TODO: et si participant affiché != de user - ?? {% if participant.id == user.id and participant.image is not defined%}  AJOUTER Image#}
 
-                <a href="{{ path('participant_delete',{'id':participant.id})}}" title="Supprimer participant"><button>Supprimer</button></a>
+                <button><a href="{{ path('main_home') }}">Retour</a></button>
+                {% if is_granted("ROLE_ADMIN")%} {#TODO: et si participant affiché != de user ->  and not participant.id==user.id#}
+
+                    <a href="{{ path('participant_delete',{'id':participant.id})}}" title="Supprimer participant"><button>Supprimer</button></a>
 
                 {% endif %}
             </div>

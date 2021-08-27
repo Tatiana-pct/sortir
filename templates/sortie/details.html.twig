@@ -48,10 +48,9 @@
     </table>
     </div>
     <br>
-    <div>
 
     <table>
-        <h3>Nom des participants inscrits</h3>
+        <h4>Nom des participants inscrits</h4>
             <thead>
             <tr>
                 <th>Pseudo</th>
@@ -59,6 +58,7 @@
             </tr>
             </thead>
             <tbody>
+
 {# TODO: faire apparaitre les participants inscrits #}
             <tr>
                 <td> pseudo</td>
@@ -66,6 +66,17 @@
             </tr>
             </tbody>
         </table>
+    <div>
+        {% if app.user and app.user.roles  %}
+            <h4>Statut de la sortie : {{ sortie.etat.libelle }}</h4>
+                {% if sortie.etat.id == 8 %}
+            <div><a href="{{ path('sortie_publier',{'id':sortie.id}) }}" title="publier sortie"><button>Publier la sortie</button></a></div>
+
+ {# TODO: probleme avec delete sortie "App\Entity\Sortie object not found by the @ParamConverter annotation." #}
+
+            <div><a href="{{ path('sortie_delete',{'id':sortie.id}) }}" title="delete sortie"><button>Supprimer sortie</button></a></div>
+                {% endif %}
+        {% endif %}
     </div>
 {% endblock %}
 
