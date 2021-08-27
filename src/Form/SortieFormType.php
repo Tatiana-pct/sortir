@@ -91,10 +91,12 @@ class SortieFormType extends AbstractType
                           return $repository->createQueryBuilder('c')->orderBy('c.nom', 'ASC');
                       }
                   ])
+
             //TODO: ajouter lat et long
 
             ->add('enregistrer', SubmitType::class, [
                 'label' => 'Enregistrer',
+
             ])
             ->add('publier', SubmitType::class, [
                 'label' => 'Publier la sortie',

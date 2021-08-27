@@ -26,6 +26,7 @@
                 {% if is_granted("ROLE_ADMIN") %} {# and not participant.id==user.id#}
 
                 <a href="{{ path('participant_delete',{'id':participant.id})}}" title="Supprimer participant"><button>Supprimer</button></a>
+
                 {% endif %}
             </div>
         </div>

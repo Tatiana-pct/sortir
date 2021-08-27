@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\SortieFormType;
+use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -65,6 +66,9 @@ class SortieController extends AbstractController
 
         //traiter le formulaire
         $sortieForm->handleRequest($request);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        $sortie->setOrganisateur($user);
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             $manager = $this->getDoctrine()->getManager();
@@ -72,22 +76,16 @@ class SortieController extends AbstractController
             if($sortieForm->get('enregistrer')->isClicked()){
                 $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Créée']));
                 $this->addFlash('success', "La sortie a créée!");
+
             } elseif ($sortieForm->get('publier')->isClicked()){
                 $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
                 $this->addFlash('warning', "La sortie a été publiée !");
-                return $this->redirectToRoute('sortie_detail', ['id' => $sortie->getId()]);
-
-                //TODO: Annuler ne fonctionne pas
-
-            } elseif ($sortieForm->get('annuler')->isClicked()){
-                $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']));
-                $this->addFlash('warning', "La sortie a été annulée !");
-                return $this->redirectToRoute('sortie_liste');
             }
-
 
             $manager->persist($sortie);
             $manager->flush();
+
+            return $this->redirectToRoute('sortie_details', ['id'=>$sortie->getId()]);
         }
 
         return $this->render('sortie/create.html.twig', [
@@ -96,7 +94,17 @@ class SortieController extends AbstractController
     }
 
     //TODO: fonction detail + template
-
+    /**
+     * @Route("/details/{id}", name="details")
+     */
+        public function detail(int $id, SortieRepository $sortieRepository):Response
+        {
+            $sortie = $sortieRepository->find($id);
+            if(!$sortie) {
+                throw $this->createNotFoundException('Oups ! Cette sortie n\'existe pas !');
+            }
+            return $this->render('sortie/details.html.twig', ["sortie"=>$sortie]);
+        }
 
     /*
         public function detail(int $id, SortieRepository $sortieRepository): Response

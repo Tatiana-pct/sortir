@@ -107,3 +107,22 @@ footer {
     width: 100px;
     height: auto;
 }
+.tableSortie
+{
+    width: 90%;
+}
+.tableSortie,
+tr
+{
+    height: 80%;
+}
+.tableSortie,
+tr,td
+{
+    height: 20px;
+}
+.tableSortie,
+tr,th
+{
+    height: 20px;
+}
