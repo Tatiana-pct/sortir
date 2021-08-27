@@ -8,9 +8,9 @@
 
     <div>
         <article>
-            {% if participant.image is defined %}
-                <img src="{{ asset('image/imagesProfil/')~participant.image.nom }}" alt="Image de profil de {{ participant.pseudo }}">
-                {% eslse %}
+            {% if participant.image.nom is defined %}
+                <img class="imgProfil" src="{{ asset('image/imagesProfil/')~participant.image.nom }}" alt="Image de profil de {{ participant.pseudo }}" >
+                {% else %}
                 <p>Pas de photo de profil</p>
             {% endif %}
         </article>
