@@ -15,6 +15,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class Participant implements UserInterface
 {
+
+    public function __toString() {
+        return $this->nom;
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
