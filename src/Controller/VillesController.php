@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 
+use App\Entity\Ville;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -57,7 +58,7 @@ class VillesController extends AbstractController
     {
         $ville= new ville();
 
-        $entityManager->remove($villes);
+        $entityManager->remove($ville);
         $entityManager->flush();
         return $this->render('villes/create.html.twig');
     }
