@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section>
+        <table>
+
+            <tr>
+                <th>Pseudo</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Rôle</th>
+
+            </tr>
+
+            {% for participant in participants %}
+            <tr>
+                <td><a href="{{ path('participant_details', {'id': participant.id}) }}"> {{ participant.pseudo }}</td>
+                <td>{{ participant.nom }}</td>
+                <td>{{ participant.prenom }}</td>
+                <td>{{ participant.email }}</td>
+                <td> {% if participant.administrateur == 1 %}
+                    ADMIN
+                {% elseif participant.administrateur == 0 %}
+                    USER
+                {% endif %}
+                </td>
+            </tr>
+
+
+            {% endfor %}
+                </table>
+    </section>
+{% endblock %}
+
+{% block title %}
+    Detail Participant {{ parent() }}
+{% endblock %}
+

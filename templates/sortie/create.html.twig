@@ -1,13 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ parent()}} | Create your Wish {% endblock %}
+{% block title %} {{ parent()}} | Créer une sortie {% endblock %}
 {% block body %}
 
     <div>
         {{ form_start(sortieForm) }}
-        {{ form_widget(sortieForm) }}
-        {{ form_end(sortieForm) }}
+        <div>
+            {{ form_row(sortieForm.nom) }}
+            {{ form_row(sortieForm.dateHeureDebut) }}
+            {{ form_row(sortieForm.duree) }}
+            {{ form_row(sortieForm.dateLimiteInscription) }}
+            {{ form_row(sortieForm.nbInscriptionsMax) }}
+            {{ form_row(sortieForm.infosSortie) }}
+        </div>
+        <div>
+            {{ form_row(sortieForm.campus) }}
+            {{ form_row(sortieForm.lieu) }}
+        </div>
 
+        {{ form_end(sortieForm) }}
     </div>
 
 {% endblock %}

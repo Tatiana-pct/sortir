@@ -55,6 +55,7 @@ class SortieController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/create", name="create")
      */
@@ -71,11 +72,15 @@ class SortieController extends AbstractController
             $manager = $this->getDoctrine()->getManager();
 
             if($sortieForm->get('enregistrer')->isClicked()){
-               $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Créée']));
+                $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Créée']));
                 $this->addFlash('success', "La sortie a créée!");
             } elseif ($sortieForm->get('publier')->isClicked()){
                 $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
                 $this->addFlash('warning', "La sortie a été publiée !");
+                return $this->redirectToRoute('sortie_detail', ['id' => $sortie->getId()]);
+
+                //TODO: Annuler ne fonctionne pas
+
             } elseif ($sortieForm->get('annuler')->isClicked()){
                 $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']));
                 $this->addFlash('warning', "La sortie a été annulée !");
@@ -91,4 +96,14 @@ class SortieController extends AbstractController
             'sortieForm' => $sortieForm->createView()
         ]);
     }
+
+    //TODO: fonction detail + template
+
+
+    /*
+        public function detail(int $id, SortieRepository $sortieRepository): Response
+        {
+            $sortie = $sortieRepository->find($id);
+            return $this->render('wish/detail.html.twig', ["sortie" => $sortie]);
+        }*/
 }
