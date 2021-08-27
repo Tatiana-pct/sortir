@@ -6,9 +6,8 @@ namespace App\Controller;
 use App\Entity\Campus;
 use App\Form\CampusType;
 use App\Repository\CampusRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 /**
@@ -20,35 +19,28 @@ class CampusController extends AbstractController
     /**
      * @Route("/liste", name="liste")
      */
-    public function afficherCampus(CampusRepository  $campusRepository)
+    public function afficherCampus(CampusRepository $CampusRepository, Request $request, EntityManagerInterface $entityManager)
 
     {
-        $campus = $campusRepository->findAll();
+
+        $campus = new Campus();
+        $CampusForm =$this->createForm(CampusType::class,$campus);
+        $CampusForm->handleRequest($request);
+
+        if($CampusForm->isSubmitted() && $CampusForm->isValid()) {
+            $entityManager->persist($campus);
+            $entityManager->flush();
+
+            $this->addFlash('succes','Campus ajouté!');
+            return $this->redirectToRoute('campus_liste');
+        }
 
         return $this->render('campus/list.html.twig',[
-        "campus" => $campus
+        "CampusForm" => $CampusForm->createView(),
+        "Campus" => $campus,
+
     ]);
 
-    }
-    /**
-     * @Route("/demo", name="em-demo")
-     */
-    public function demo(EntityManagerInterface $entityManager)
-
-    {
-        $campus= new Campus();
-
-        $campus->setNom('bdx');
-        dump($campus);
-
-        $entityManager->persist();
-        $entityManager->flush();
-
-
-
-
-
-        return $this->render('campus/list.html.twig');
     }
 
 
@@ -77,7 +69,7 @@ class CampusController extends AbstractController
     /**
      * @Route("/delete", name="delete")
      */
-    public function DeleteCampus(int $id, EntityManagerInterface $entityManager)
+    public function deleteCampus(int $id, EntityManagerInterface $entityManager)
     {
         $campus= new Campus();
 
