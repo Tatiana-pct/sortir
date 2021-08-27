@@ -7,7 +7,7 @@
             <li><a href="{{ path('campus_liste') }}" title="Campus">Campus</a></li>
             {% if is_granted("ROLE_ADMIN") %}
                 <li><a href="{{ path('participant_list') }}" title="Liste Participant">Liste des participants</a></li>
-                <li><a href="{{ path('app_register') }}" title="Login">Cree un utilisateur</a></li>
+                <li><a href="{{ path('app_register') }}" title="Login">Créer un participant</a></li>
                 <li><a href="{{ path('sortie_create') }}">Créer une sortie</a> </li>
 
                 <li><a class="dashboard" href="{{ path('admin_dashboard') }}" title="Admin dashboard">AdminDashboard</a></li>

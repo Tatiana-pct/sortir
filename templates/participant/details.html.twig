@@ -7,6 +7,13 @@
 {% block body %}
 
     <div>
+        <article>
+            {% if participant.image is defined %}
+                <img src="{{ asset('image/imagesProfil/')~participant.image.nom }}" alt="Image de profil de {{ participant.pseudo }}">
+                {% eslse %}
+                <p>Pas de photo de profil</p>
+            {% endif %}
+        </article>
         <div>
             <h2> {{ participant.pseudo }}</h2>
             <div>Prénom : {{ participant.prenom }}</div>
