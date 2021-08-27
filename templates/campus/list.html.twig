@@ -5,10 +5,14 @@
 {% block body %}
     <div>
         <h1 >Gerer les campus</h1>
-        {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('campus_create') }}" >Ajouter un Campus</a>
-        {% endif %}
+
+
         <table  style="width:100%">
+            <div>
+                #afficher fomulaire de recherche
+                <input type="button" name="recherche" value="recherche">
+            </div>
+
             <thead>
             <th>
                 <td >id</td>
@@ -48,4 +52,15 @@
         </table>
 
     </div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <br>
+        <div>
+
+            #afficher formulaire d'ajout
+        </div>
+        <br>
+        <a href="{{ path('campus_create') }}" >Ajouter un Campus</a>
+
+    {% endif %}
+
 {% endblock %}

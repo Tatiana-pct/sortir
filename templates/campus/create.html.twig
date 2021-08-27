@@ -1,13 +1,19 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ parent() }} {% endblock %}
+
 {% block body %}
-        <div>
-            {# afficher le formulaire de creation #}
-                <h1> cecie est la page de creation d'un campus</h1>
+        <div class="jumbotron mt-2">
+                <h1> ceci est la page de creation de campus</h1>
+
+                <input type="button" name="recherche" value="recherche">
+
+
+
+
+
+
+
+
         </div>
 {% endblock %}
-
-{% block title %}
-Create a new campus | {{ parent() }}
-{% endblock %}
-
