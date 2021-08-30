@@ -30,7 +30,7 @@
         <tr>
             <th>Nombre de places :  </th>
             <td>{{ sortie.nbInscriptionsMax}}</td>
-            <th>Rue : </th>
+            <th>Code postal : </th>
             <td>{{ sortie.lieu.ville.codePostal}} {{ sortie.lieu.ville.nom }}</td>
         </tr>
         <tr>
@@ -50,7 +50,7 @@
     <br>
 
     <table>
-        <h4>Nom des participants inscrits</h4>
+        <h4>Nom des participants inscrits :</h4>
             <thead>
             <tr>
                 <th>Pseudo</th>
@@ -59,11 +59,12 @@
             </thead>
             <tbody>
 
-{# TODO: faire apparaitre les participants inscrits #}
+{% for partipant in sortie.inscrits %}
             <tr>
-                <td> pseudo</td>
-                <td>nom</td>
+                <td> {{ partipant.pseudo}}</td>
+                <td>{{ partipant.prenom}} {{ partipant.nom }}</td>
             </tr>
+            {% endfor %}
             </tbody>
         </table>
     <div>
