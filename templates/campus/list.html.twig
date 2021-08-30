@@ -4,37 +4,38 @@
 
 {% block body %}
     <div>
-        <h1 >Gerer les campus</h1>
+        <h1 >Gerer les Campus</h1>
+        <div>
+            #afficher le formulaire de recherche
+            <input type="button" name="recherche" value="recherche">
+        </div>
 
 
         <table  style="width:100%">
-            <div>
-                #afficher fomulaire de recherche
-                <input type="button" name="recherche" value="recherche">
-            </div>
-
             <thead>
             <th>
-                <td >id</td>
-                <td >Nom</td>
+            <td >id</td>
+            <td >Nom</td>
 
-                {% if is_granted('ROLE_ADMIN') %}
 
-                    <td >Action</td>
+            {% if is_granted('ROLE_ADMIN') %}
 
-                {% endif %}
+                <td >Action</td>
+
+            {% endif %}
 
             </th>
             </thead>
             <tbody>
 
-            {% if campus is defined and campus is not empty %}
+            {% if Campus is defined and Campus is not empty %}
 
-                {% for campus in campus %}
+                {% for Campus in Campus %}
 
                     <tr>
-                        <td >{{ campus.id }} </td>
-                        <td >{{ campus.nom }}</td>
+                        <td >{{ Campus.id }} </td>
+                        <td >{{ Campus.nom }}</td>
+
 
                         {% if is_granted('ROLE_ADMIN') %}
 
@@ -45,22 +46,28 @@
                 {% endfor %}
             {% else %}
                 <tr >
-                    <th scope="row" colspan="4">Aucun lieu trouvé...</th>
+                    <th scope="row" colspan="4">Aucun campus trouvé...</th>
                 </tr>
             {% endif %}
             </tbody>
         </table>
 
     </div>
-    {% if is_granted('ROLE_ADMIN') %}
+    <div>
         <br>
-        <div>
+        {% if is_granted('ROLE_ADMIN') %}
 
-            #afficher formulaire d'ajout
-        </div>
+            <h2>Ajouter un campus</h2>
+            {{ form_start(CampusForm) }}
+
+            {{ form_widget(CampusForm) }}
+
+            <a href="{{ path('campus_liste') }}"><button class="btn btn-primary">Ajouter</button></a>
+
+            {{ form_end(CampusForm) }}
+
+        {% endif %}
         <br>
-        <a href="{{ path('campus_create') }}" >Ajouter un Campus</a>
-
-    {% endif %}
+    </div>
 
 {% endblock %}

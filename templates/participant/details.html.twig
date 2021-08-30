@@ -16,12 +16,18 @@
         </article>
         <div>
             <h2> {{ participant.pseudo }}</h2>
+            <br>
             <div>Prénom : {{ participant.prenom }}</div>
+            <br>
             <div>Nom : {{ participant.nom }}</div>
+            <br>
             <div>Téléphone : {{ participant.telephone }}</div>
+            <br>
             <div>Email : {{ participant.email }}</div>
+            <br>
             <div>Campus : {{ participant.campus.nom }}</div>
             <div>
+                <br>
                 {#TODO: et si participant affiché != de user - ?? {% if participant.id == user.id and participant.image is not defined%}  AJOUTER Image#}
 
                 <button><a href="{{ path('main_home') }}">Retour</a></button>

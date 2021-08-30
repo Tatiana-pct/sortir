@@ -28,6 +28,7 @@ class VillesController extends AbstractController
             $entityManager->persist($Ville);
             $entityManager->flush();
 
+            $this->addFlash('succes','Ville ajoutée!');
             return $this->redirectToRoute('villes_liste');
         }
 
