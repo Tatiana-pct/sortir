@@ -1,4 +1,5 @@
 <nav>
+<div class="topnav" id="myTopnav">
     <ul>
         {% if app.user %}
             <li><a href="{{ path('app_logout') }}" title="Logout">Se déconnecter ({{ app.User.firstname }})</a></li>
@@ -17,4 +18,5 @@
         {% endif %}
 
     </ul>
+</div>
 </nav>

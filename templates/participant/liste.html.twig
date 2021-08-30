@@ -17,7 +17,7 @@
 
             {% for participant in participants %}
             <tr>
-                <td> {% if participant.image.nom is defined %}
+                <td><a href="{{ path('participant_details', {'id': participant.id}) }}"> {% if participant.image.nom is defined %}
                         <img class="imgProfilListe" src="{{ asset('image/imagesProfil/')~participant.image.nom }}" alt="Image de profil de {{ participant.pseudo }}" >
                     {% else %}
                         <p>Pas de photo</p>

@@ -12,6 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -41,10 +42,10 @@ class SortieFormType extends AbstractType
             ->add('duree',
                   IntegerType::class,
                   [
-                      'label' => 'Durée',
+                      'label' => 'Durée en minutes',
                       'attr' => [
                           'min' => '1',
-                          'max' => '100']
+                          'max' => '100'],
                   ])
 
             ->add('dateLimiteInscription',
@@ -59,7 +60,7 @@ class SortieFormType extends AbstractType
             ->add('nbInscriptionsMax',
                   IntegerType::class,
                   [
-                      'label' => 'Nombre de place',
+                      'label' => 'Nombre de places',
                       'attr' => [
                           'min' => '1',
                           'max' => '100']
@@ -91,6 +92,7 @@ class SortieFormType extends AbstractType
                           return $repository->createQueryBuilder('c')->orderBy('c.nom', 'ASC');
                       }
                   ])
+
             //TODO: ajouter lat et long
 
             ->add('enregistrer', SubmitType::class, [

@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ParticipantController extends AbstractController
 {
+
     /**
      * @Route("/liste", name="list")
      */
@@ -28,21 +29,25 @@ class ParticipantController extends AbstractController
         return $this->render('Participant/liste.html.twig', ["participants" => $participants]);
     }
 
+
     /**
      * @Route ("/delete/{id}", name="delete")
      */
     public function delete(Participant $participant,
-                           EntityManagerInterface $entityManager)
+                           EntityManagerInterface $entityManager): Response
     {
 
+        $img = $participant->getImage();
+        $nomeImg=$img->getNom();
+
+        unlink('../public/image/imagesProfil/'.$nomeImg);
+
         $entityManager->remove($participant);
-
         $entityManager->flush();
-
-        //TODO: suppression image
 
         return $this->redirectToRoute('main_home');
     }
+
 
     /**
      * @Route("/details/{id}", name="details")

@@ -52,6 +52,8 @@ class RegistrationFormType extends AbstractType
 
             ->add('administrateur')
 
+            ->add('actif')
+
             ->add('image', ImageType::class, [
                 'label'=>false,
             ])

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Campus;
+use App\Form\CampusType;
 use App\Repository\CampusRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -53,12 +54,11 @@ class CampusController extends AbstractController
 
     /**
      * @Route("/create", name="create")
+     *
      */
-    public function createCampus()
+    public function createCampus(CampusRepository $campusRepository)
     {
-
-
-        return $this->render('campus/create.html.twig');
+        return $this->render('campus/list.html.twig');
     }
 
 

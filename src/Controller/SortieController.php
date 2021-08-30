@@ -2,16 +2,18 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\FilterSortieType;
 use App\Form\SortieFormType;
-use Doctrine\ORM\EntityManager;
+use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 /**
  * @Route("/sortie", name="sortie_")
  */
@@ -56,6 +58,7 @@ class SortieController extends AbstractController
     }
 
 
+
     /**
      * @Route("/create", name="create")
      */
@@ -67,6 +70,9 @@ class SortieController extends AbstractController
 
         //traiter le formulaire
         $sortieForm->handleRequest($request);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        $sortie->setOrganisateur($user);
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             $manager = $this->getDoctrine()->getManager();
@@ -74,22 +80,16 @@ class SortieController extends AbstractController
             if($sortieForm->get('enregistrer')->isClicked()){
                 $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Créée']));
                 $this->addFlash('success', "La sortie a créée!");
+
             } elseif ($sortieForm->get('publier')->isClicked()){
                 $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
                 $this->addFlash('warning', "La sortie a été publiée !");
-                return $this->redirectToRoute('sortie_detail', ['id' => $sortie->getId()]);
-
-                //TODO: Annuler ne fonctionne pas
-
-            } elseif ($sortieForm->get('annuler')->isClicked()){
-                $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']));
-                $this->addFlash('warning', "La sortie a été annulée !");
-                return $this->redirectToRoute('sortie_liste');
             }
-
 
             $manager->persist($sortie);
             $manager->flush();
+
+            return $this->redirectToRoute('sortie_details', ['id'=>$sortie->getId()]);
         }
 
         return $this->render('sortie/create.html.twig', [
@@ -97,13 +97,48 @@ class SortieController extends AbstractController
         ]);
     }
 
-    //TODO: fonction detail + template
 
-
-    /*
-        public function detail(int $id, SortieRepository $sortieRepository): Response
+    /**
+     * @Route("/details/{id}", name="details")
+     */
+        public function detail(int $id, SortieRepository $sortieRepository):Response
         {
+
+
             $sortie = $sortieRepository->find($id);
-            return $this->render('wish/detail.html.twig', ["sortie" => $sortie]);
-        }*/
+            if(!$sortie) {
+                throw $this->createNotFoundException('Oups ! Cette sortie n\'existe pas !');
+            }
+            return $this->render('sortie/details.html.twig', ["sortie"=>$sortie]);
+        }
+
+
+    /**
+     * @Route("/delete/{id}", name="delete")
+     *
+     */
+    public function delete(Sortie $sortie, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        $entityManager->remove($sortie);
+        $entityManager->flush();
+
+        $this->addFlash('delete', 'Sortie supprimée');
+        return $this->redirectToRoute('sortie_liste');
+    }
+
+
+    /**
+     * @Route("/publier/{id}", name="publier")
+     */
+    public function publier(Sortie $sortie, EntityManagerInterface $em): Response
+    {
+        $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
+        $this->addFlash('warning', "La sortie a été publiée !");
+        $em->flush();
+
+        $this->addFlash('publiée', 'Sortie publiée');
+        return $this->redirectToRoute('sortie_details', ['id'=>$sortie->getId()]);
+    }
 }

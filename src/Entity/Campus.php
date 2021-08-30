@@ -27,7 +27,7 @@ class Campus
     /**
      * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="campus")
      */
-    private $sortie;
+    private $sorties;
 
     /**
      * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="campus")
@@ -36,7 +36,7 @@ class Campus
 
     public function __construct()
     {
-        $this->sortie = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
         $this->participants = new ArrayCollection();
     }
 
@@ -60,15 +60,15 @@ class Campus
     /**
      * @return Collection|sortie[]
      */
-    public function getSortie(): Collection
+    public function getSorties(): Collection
     {
-        return $this->sortie;
+        return $this->sorties;
     }
 
     public function addSortie(sortie $sortie): self
     {
-        if (!$this->sortie->contains($sortie)) {
-            $this->sortie[] = $sortie;
+        if (!$this->sorties->contains($sortie)) {
+            $this->sorties[] = $sortie;
             $sortie->setCampus($this);
         }
 
@@ -77,7 +77,7 @@ class Campus
 
     public function removeSortie(sortie $sortie): self
     {
-        if ($this->sortie->removeElement($sortie)) {
+        if ($this->sorties->removeElement($sortie)) {
             // set the owning side to null (unless already changed)
             if ($sortie->getCampus() === $this) {
                 $sortie->setCampus(null);
