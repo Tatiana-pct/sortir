@@ -72,7 +72,7 @@ class VillesController extends AbstractController
     public function deleteVille(int $id, EntityManagerInterface $entityManager, Request $request)
     {
         $ville= $entityManager->getRepository(Ville::class)->find($request->get('id'));
-
+        // TODO: faire methode de suppression des villes
         $entityManager->remove($ville);
         $entityManager->flush();
         return $this-> redirectToRoute('villes_');
