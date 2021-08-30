@@ -17,6 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CampusController extends AbstractController
 {
+    /**
+     * @var Campus[]|array|object[]
+     */
+    private $CampusList= null;
 
     /**
      * @Route("/liste", name="liste")
@@ -52,7 +56,7 @@ class CampusController extends AbstractController
     /**
      * @Route("/edit", name="edit")
      */
-    public function editCampus(int $id, EntityManagerInterface $entityManager)
+    public function editCampus(int $id, EntityManagerInterface $entityManager, Request $request)
     {
         $Campus = new Campus();
         $form = $this->createForm(CampusType::class, $Campus);
@@ -61,9 +65,20 @@ class CampusController extends AbstractController
             'label' => 'modifier',
 
         ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()&& $form->isValid()){
+            $Campus =$form->getData();
+
+            $entityManager->persist($Campus);
+            $entityManager->flush();
+            $this->addFlash('Succes','la ville a bien ete modifiée !');
+            $this->CampusList =$entityManager->getRepository(Campus::class)->findAll();
+            return  $this->redirectToRoute('villes_');
+        }
 
 
-        return $this->render('campus/create.html.twig');
+
+        return $this->render('campus/list.html.twig');
     }
 
 
@@ -76,7 +91,7 @@ class CampusController extends AbstractController
 
         $entityManager->remove($campus);
         $entityManager->flush();
-        return $this->render('campus/create.html.twig');
+        return $this->redirectToRoute('campus_liste');
     }
 
 
