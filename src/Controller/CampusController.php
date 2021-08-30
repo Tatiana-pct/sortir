@@ -54,6 +54,7 @@ class CampusController extends AbstractController
      */
     public function editCampus(int $id, EntityManagerInterface $entityManager)
     {
+        $Campus = new Campus();
         $form = $this->createForm(CampusType::class, $Campus);
         $form->remove('submit');
         $form->add('submit',SubmitType::class,[
