@@ -1,11 +1,13 @@
 <nav>
 <div class="topnav" id="myTopnav">
     <ul>
+
         {% if app.user %}
             <li><a href="{{ path('app_logout') }}" title="Logout">Se déconnecter ({{ app.User.firstname }})</a></li>
             <li><a href="{{ path('participant_details',{'id':app.user.id}) }}" title="Details">Mon compte </a></li>
             <li><a href="{{ path('villes_liste') }}" title="Ville">Ville</a></li>
             <li><a href="{{ path('campus_liste') }}" title="Campus">Campus</a></li>
+            <li><a href="{{ path('sortie_liste') }}" title="Sorties">Liste des sorties</a></li>
             {% if is_granted("ROLE_ADMIN") %}
                 <li><a href="{{ path('participant_list') }}" title="Liste Participant">Liste des participants</a></li>
                 <li><a href="{{ path('app_register') }}" title="Login">Créer un participant</a></li>
@@ -14,6 +16,7 @@
                 <li><a class="dashboard" href="{{ path('admin_dashboard') }}" title="Admin dashboard">AdminDashboard</a></li>
             {% endif %}
         {% else  %}
+            <li><a href="{{ path('app_register') }}" title="Login">S'enregistrer</a></li>
             <li><a href="{{ path('app_login') }}" title="Login">Se Connecter</a></li>
         {% endif %}
 

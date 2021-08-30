@@ -34,6 +34,26 @@ class ParticipantRepository extends ServiceEntityRepository
         $this->_em->persist($user);
         $this->_em->flush();
     }
+
+    /**
+     * @return Participant Returns un Participant
+     */
+    public function findByMail($email) : Participant
+    {
+        $participant = new Participant();
+
+        $array = $this->createQueryBuilder('p')
+            ->andWhere('p.email = :email')
+            ->setParameter('email', $email)
+            ->getQuery()
+            ->getResult();
+
+        foreach ($array as $p){
+            $participant = $p;
+        }
+        return $participant;
+
+    }
     // /**
     //  * @return participant[] Returns an array of participant objects
     //  */

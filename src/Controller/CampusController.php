@@ -5,8 +5,10 @@ namespace App\Controller;
 
 use App\Entity\Campus;
 use App\Form\CampusType;
+use App\Form\VillesType;
 use App\Repository\CampusRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CampusController extends AbstractController
 {
+    /**
+     * @var Campus[]|array|object[]
+     */
+    private $CampusList= null;
 
     /**
      * @Route("/liste", name="liste")
@@ -44,25 +50,35 @@ class CampusController extends AbstractController
     }
 
 
-    /**
-     * @Route("/create", name="create")
-     *
-     */
-    public function createCampus(CampusRepository $campusRepository)
-    {
-        return $this->render('campus/list.html.twig');
-    }
+
 
 
     /**
      * @Route("/edit", name="edit")
      */
-    public function editCampus(int $id, EntityManagerInterface $entityManager)
+    public function editCampus(int $id, EntityManagerInterface $entityManager, Request $request)
     {
-        $campus= new Campus();
-        $campus->setNom('');
+        $Campus = new Campus();
+        $form = $this->createForm(CampusType::class, $Campus);
+        $form->remove('submit');
+        $form->add('submit',SubmitType::class,[
+            'label' => 'modifier',
 
-        return $this->render('campus/create.html.twig');
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()&& $form->isValid()){
+            $Campus =$form->getData();
+
+            $entityManager->persist($Campus);
+            $entityManager->flush();
+            $this->addFlash('Succes','la ville a bien ete modifiée !');
+            $this->CampusList =$entityManager->getRepository(Campus::class)->findAll();
+            return  $this->redirectToRoute('villes_');
+        }
+
+
+
+        return $this->render('campus/list.html.twig');
     }
 
 
@@ -75,7 +91,7 @@ class CampusController extends AbstractController
 
         $entityManager->remove($campus);
         $entityManager->flush();
-        return $this->render('campus/create.html.twig');
+        return $this->redirectToRoute('campus_liste');
     }
 
 

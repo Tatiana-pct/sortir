@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ville;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\VillesType;
 use App\Repository\VilleRepository;
@@ -39,43 +40,54 @@ class VillesController extends AbstractController
             'villeForm' => $VilleForm->createView()
         ]);
 
-    }
-
-
-    /**
-     * @Route("/create", name="create")
-     */
-    public function createVille()
-    {
-
-        return $this->render('villes/list.html.twig');
-
-
 
     }
+
+
+
 
 
     /**
      * @Route("/edit", name="edit")
      */
-    public function editVille(int $id, EntityManagerInterface $entityManager)
+    public function editVille(int $id, EntityManagerInterface $entityManager,Request $request)
     {
-        $ville = new ville();
-        $ville->setNom('');
+        $ville = new Ville();
+        $form = $this-> createForm(VillesType::class, $ville);
+        $form->remove('submit');
+        $form->add('submit',SubmitType::class,[
+            'label'=> 'modifier'
+        ]);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $ville = $form->getData();
 
-        return $this->render('villes/create.html.twig');
+            $entityManager->persist($ville);
+            $entityManager->flush();
+            $this->addFlash('success', 'La ville a bien été modifiée !');
+
+            $this->villesListe = $entityManager->getRepository(Ville::class)->findAll();
+
+            return $this->redirectToRoute('villes_liste');
+        }
+
+        return $this->render('villes/list.html.twig', [
+            'page_name' => 'Modification de la ville',
+            'ville' => $ville,
+            'form' => $form->createView()
+        ]);
     }
 
 
     /**
      * @Route("/delete", name="delete")
      */
-    public function deleteVille(int $id, EntityManagerInterface $entityManager)
+    public function deleteVille(int $id, EntityManagerInterface $entityManager, Request $request)
     {
-        $ville= new ville();
-
+        $ville= $entityManager->getRepository(Ville::class)->find($request->get('id'));
+        // TODO: faire methode de suppression des villes
         $entityManager->remove($ville);
         $entityManager->flush();
-        return $this->render('villes/create.html.twig');
+        return $this-> redirectToRoute('villes_');
     }
 }
