@@ -64,8 +64,7 @@ class SortieController extends AbstractController
      * @Route("/liste", name="liste")
      */
     public function list(SortieRepository $sortieRepository,
-                         Request $request,
-                        UserInterface $user): Response
+                         Request          $request): Response
     {
 
         //aller chercher les sorties en BDD
