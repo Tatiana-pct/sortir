@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ville;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\VillesType;
 use App\Repository\VilleRepository;
@@ -42,17 +43,7 @@ class VillesController extends AbstractController
     }
 
 
-    /**
-     * @Route("/create", name="create")
-     */
-    public function createVille()
-    {
 
-        return $this->render('villes/list.html.twig');
-
-
-
-    }
 
 
     /**
@@ -60,8 +51,13 @@ class VillesController extends AbstractController
      */
     public function editVille(int $id, EntityManagerInterface $entityManager)
     {
-        $ville = new ville();
-        $ville->setNom('');
+        $ville = new Ville();
+        $form = $this-> createForm(VillesType::class, $ville);
+        $form->remove('submit');
+        $form->add('submit',SubmitType::class,[
+            'label'=> 'modifier'
+        ]);
+
 
         return $this->render('villes/create.html.twig');
     }
@@ -70,12 +66,12 @@ class VillesController extends AbstractController
     /**
      * @Route("/delete", name="delete")
      */
-    public function deleteVille(int $id, EntityManagerInterface $entityManager)
+    public function deleteVille(int $id, EntityManagerInterface $entityManager, Request $request)
     {
-        $ville= new ville();
-
+        $ville= $entityManager->getRepository(Ville::class)->find($request->get('id'));
+        // TODO: faire methode de suppression des villes
         $entityManager->remove($ville);
         $entityManager->flush();
-        return $this->render('villes/create.html.twig');
+        return $this-> redirectToRoute('villes_');
     }
 }

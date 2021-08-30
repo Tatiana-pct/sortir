@@ -6,6 +6,8 @@
     <div>
         <h1 >Gerer les villes</h1>
         <div>
+
+
             #afficher le formulaire de recherche
             <input type="button" name="recherche" value="recherche">
         </div>
@@ -63,6 +65,8 @@
         {{ form_widget(villeForm) }}
 
         <a href="{{ path('villes_liste') }}"><button class="btn btn-primary">Ajouter</button></a>
+        // TODO: faire methode de suppression des campus
+        <a href="{{ path('villes_delete') }}"><button class="btn btn-primary">Supprimer</button></a>
 
         {{ form_end(villeForm) }}
 
