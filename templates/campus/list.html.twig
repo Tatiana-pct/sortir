@@ -28,13 +28,13 @@
             </thead>
             <tbody>
 
-            {% if campus is defined and campus is not empty %}
+            {% if Campus is defined and Campus is not empty %}
 
-                {% for campus in Campus %}
+                {% for Campus in Campus %}
 
                     <tr>
-                        <td >{{ campus.id }} </td>
-                        <td >{{ campus.nom }}</td>
+                        <td >{{ Campus.id }} </td>
+                        <td >{{ Campus.nom }}</td>
 
 
                         {% if is_granted('ROLE_ADMIN') %}
@@ -56,8 +56,8 @@
     <div>
         <br>
         {% if is_granted('ROLE_ADMIN') %}
-            #afficher le formulaire d'ajout
-            <h2>Ajouter une ville</h2>
+
+            <h2>Ajouter un campus</h2>
             {{ form_start(CampusForm) }}
 
             {{ form_widget(CampusForm) }}

@@ -22,13 +22,13 @@ class CampusController extends AbstractController
     public function afficherCampus(CampusRepository $CampusRepository, Request $request, EntityManagerInterface $entityManager)
 
     {
-
-        $campus = new Campus();
-        $CampusForm =$this->createForm(CampusType::class,$campus);
+        $campus= $CampusRepository->findAll();
+        $Campus = new Campus();
+        $CampusForm =$this->createForm(CampusType::class,$Campus);
         $CampusForm->handleRequest($request);
 
         if($CampusForm->isSubmitted() && $CampusForm->isValid()) {
-            $entityManager->persist($campus);
+            $entityManager->persist($Campus);
             $entityManager->flush();
 
             $this->addFlash('succes','Campus ajouté!');
@@ -36,8 +36,8 @@ class CampusController extends AbstractController
         }
 
         return $this->render('campus/list.html.twig',[
-        "CampusForm" => $CampusForm->createView(),
-        "Campus" => $campus,
+            "Campus" => $campus,
+            "CampusForm" => $CampusForm->createView(),
 
     ]);
 
