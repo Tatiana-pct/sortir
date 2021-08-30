@@ -13,12 +13,12 @@ class RechercheData
     private $campus;
 
     /**
-     * @var DateTime
+     * @var DateTime|null
      */
     private $dateHeureDebut;
 
     /**
-     * @var DateTime
+     * @var DateTime|null
      */
     private $dateCloture;
 
@@ -62,36 +62,39 @@ class RechercheData
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getDateHeureDebut(): DateTime
+    public function getDateHeureDebut(): ?DateTime
     {
         return $this->dateHeureDebut;
     }
 
     /**
-     * @param DateTime $dateHeureDebut
+     * @param DateTime|null $dateHeureDebut
      */
-    public function setDateHeureDebut(DateTime $dateHeureDebut): void
+    public function setDateHeureDebut(?DateTime $dateHeureDebut): void
     {
         $this->dateHeureDebut = $dateHeureDebut;
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getDateCloture(): DateTime
+    public function getDateCloture(): ?DateTime
     {
         return $this->dateCloture;
     }
 
     /**
-     * @param DateTime $dateCloture
+     * @param DateTime|null $dateCloture
      */
-    public function setDateCloture(DateTime $dateCloture): void
+    public function setDateCloture(?DateTime $dateCloture): void
     {
         $this->dateCloture = $dateCloture;
     }
+
+
+
 
     /**
      * @return bool

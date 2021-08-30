@@ -58,6 +58,18 @@ class SortieRepository extends ServiceEntityRepository
                 ->andWhere('s.campus = :campus')
                 ->setParameter('campus', $recherche->getCampus());
         }
+
+        if (!empty($recherche->getDateHeureDebut())) {
+            $query = $query
+                ->andWhere('s.dateHeureDebut >= :dateHeureDebut')
+                ->setParameter('dateHeureDebut', $recherche->getDateHeureDebut());
+        }
+
+        if (!empty($recherche->getDateCloture())) {
+            $query = $query
+                ->andWhere('s.dateLimiteInscription <= :dateLimiteInscription')
+                ->setParameter('dateLimiteInscription', $recherche->getDateCloture());
+        }
             return $query->getQuery()->getResult();
     }
 

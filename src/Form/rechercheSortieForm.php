@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,6 +34,24 @@ class rechercheSortieForm extends AbstractType
                     ''
                 ]
             ])
+
+            ->add('dateHeureDebut',DateType::class, [
+                'label' => 'Entre le',
+                'html5' => true,
+                'widget' => 'single_text',
+                'required' => false,
+                'attr' => ['class' => 'datepicker'],
+
+            ])
+
+            ->add('dateCloture', DateType::class, [
+                'label' => 'et le',
+                'html5' => true,
+                'widget' => 'single_text',
+                'required' => false,
+                'attr' => ['class' => 'datepicker'],
+            ])
+
 
             //TODO: recherche avec Date et options
 
