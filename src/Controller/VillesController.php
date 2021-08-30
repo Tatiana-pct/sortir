@@ -49,7 +49,7 @@ class VillesController extends AbstractController
     /**
      * @Route("/edit", name="edit")
      */
-    public function editVille(int $id, EntityManagerInterface $entityManager)
+    public function editVille(int $id, EntityManagerInterface $entityManager,Request $request)
     {
         $ville = new Ville();
         $form = $this-> createForm(VillesType::class, $ville);
@@ -57,9 +57,24 @@ class VillesController extends AbstractController
         $form->add('submit',SubmitType::class,[
             'label'=> 'modifier'
         ]);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $ville = $form->getData();
 
+            $entityManager->persist($ville);
+            $entityManager->flush();
+            $this->addFlash('success', 'La ville a bien été modifiée !');
 
-        return $this->render('villes/create.html.twig');
+            $this->villesListe = $entityManager->getRepository(Ville::class)->findAll();
+
+            return $this->redirectToRoute('villes_liste');
+        }
+
+        return $this->render('villes/list.html.twig', [
+            'page_name' => 'Modification de la ville',
+            'ville' => $ville,
+            'form' => $form->createView()
+        ]);
     }
 
 
