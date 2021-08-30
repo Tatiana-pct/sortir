@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\data\RechercheData;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,6 +38,27 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         return $sortie;
+    }
+
+    public function trouveData(RechercheData $recherche)
+    {
+        $query = $this
+            ->createQueryBuilder('s')
+            ->select('c','s')
+            ->join('s.campus','c');
+
+        if(!empty($recherche->getQ())) {
+            $query =$query
+                ->andWhere('s.nom LIKE :q')
+                ->setParameter('q', "%{$recherche->getQ()}%");
+        }
+
+        if (!empty($recherche->getCampus())) {
+            $query = $query
+                ->andWhere('s.campus = :campus')
+                ->setParameter('campus', $recherche->getCampus());
+        }
+            return $query->getQuery()->getResult();
     }
 
     // /**

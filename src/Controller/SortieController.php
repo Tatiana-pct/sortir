@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 
+use App\data\RechercheData;
 use App\Entity\Etat;
 use App\Entity\Sortie;
+use App\Form\rechercheSortieForm;
 use App\Form\SortieFormType;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
@@ -67,11 +69,18 @@ class SortieController extends AbstractController
     {
 
         //aller chercher les sorties en BDD
-        $sorties = $sortieRepository->findAll();
+
         $user = $this->getUser();
 
+        $data = new RechercheData();
+
+        $sortiesform = $this->createForm(rechercheSortieForm::class, $data);
+        $sortiesform->handleRequest($request);
+        $sorties = $sortieRepository->trouveData($data);
+
         return $this->render('sortie/liste.html.twig', ["sorties" => $sorties,
-            "user"=>$user]);
+            "user"=>$user,
+            'sortiesform'=>$sortiesform->createView()]);
     }
 
 

@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
@@ -52,15 +53,18 @@ class ParticipantController extends AbstractController
     /**
      * @Route("/details/{id}", name="details")
      */
-    public function details(int $id, ParticipantRepository $participantRepository): Response
+    public function details(int $id,
+                            ParticipantRepository $participantRepository,
+                            UserInterface $user): Response
     {
-
+        $user=$this->getUser();
         $participant = $participantRepository->find($id);
         if (!$participant) {
             throw $this->createNotFoundException('!');
         }
 
-        return $this->render('participant/details.html.twig', ["participant" => $participant]);
+        return $this->render('participant/details.html.twig', ["participant" => $participant,
+            "user"=>$user]);
     }
 
 }

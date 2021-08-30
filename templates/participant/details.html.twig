@@ -31,8 +31,7 @@
                 {#TODO: et si participant affiché != de user - ?? {% if participant.id == user.id and participant.image is not defined%}  AJOUTER Image#}
 
                 <button><a href="{{ path('main_home') }}">Retour</a></button>
-                {% if is_granted("ROLE_ADMIN")%} {#TODO: et si participant affiché != de user ->  and not participant.id==user.id#}
-
+                {% if is_granted("ROLE_ADMIN") and participant.id!=user.id %}
                     <a href="{{ path('participant_delete',{'id':participant.id})}}" title="Supprimer participant"><button>Supprimer</button></a>
 
                 {% endif %}
