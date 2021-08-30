@@ -55,10 +55,7 @@ class VillesController extends AbstractController
         $form = $this-> createForm(VillesType::class, $ville);
         $form->remove('submit');
         $form->add('submit',SubmitType::class,[
-            'label'=> 'modifier',
-            'attr' => [
-                'class'=> 'edit'
-            ]
+            'label'=> 'modifier'
         ]);
 
 

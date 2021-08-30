@@ -5,8 +5,10 @@ namespace App\Controller;
 
 use App\Entity\Campus;
 use App\Form\CampusType;
+use App\Form\VillesType;
 use App\Repository\CampusRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,14 +46,7 @@ class CampusController extends AbstractController
     }
 
 
-    /**
-     * @Route("/create", name="create")
-     *
-     */
-    public function createCampus(CampusRepository $campusRepository)
-    {
-        return $this->render('campus/list.html.twig');
-    }
+
 
 
     /**
@@ -59,8 +54,13 @@ class CampusController extends AbstractController
      */
     public function editCampus(int $id, EntityManagerInterface $entityManager)
     {
-        $campus= new Campus();
-        $campus->setNom('');
+        $form = $this->createForm(CampusType::class, $Campus);
+        $form->remove('submit');
+        $form->add('submit',SubmitType::class,[
+            'label' => 'modifier',
+
+        ]);
+
 
         return $this->render('campus/create.html.twig');
     }
