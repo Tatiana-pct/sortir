@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
@@ -28,26 +29,32 @@ class Participant implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Saisissez un nom")
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank(message="Saisissez un prénom")
      * @ORM\Column(type="string", length=50)
      */
     private $prenom;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $telephone;
 
     /**
+     * @Assert\Email(
+     *     message = "L'adresse mail '{{ value }}' n'est pas valide"
+     * )
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
 
     /**
+     * @Assert\NotBlank(message="Veuillez saisir votre mot de passe")
      * @var string The hashed password
      * @ORM\Column(type="text")
      */
@@ -79,11 +86,13 @@ class Participant implements UserInterface
     private $roles = [];
 
     /**
+     * @Assert\NotBlank(message="Saisissez un pseudo")
      * @ORM\Column(type="string", length=255)
      */
     private $Pseudo;
 
     /**
+     * @Assert\Image()
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist","remove"})
      */
     private $image;
