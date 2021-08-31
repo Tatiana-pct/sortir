@@ -3,9 +3,13 @@
 namespace App\Repository;
 
 use App\data\RechercheData;
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Types\DateType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Validator\Constraints\Date;
+
 
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
@@ -40,37 +44,75 @@ class SortieRepository extends ServiceEntityRepository
         return $sortie;
     }
 
-    public function trouveData(RechercheData $recherche)
+    public function trouveData(RechercheData $recherche,
+                               Participant $user)
     {
+
         $query = $this
             ->createQueryBuilder('s')
             ->select('c','s')
             ->join('s.campus','c');
 
+
+        $query = $query
+            ->andWhere('s.etat != 10 ')
+            ->andWhere('s.etat != 12 ')
+            ->andWhere('s.etat != 13 ')
+            ->andWhere('s.etat != 14 ');
+
+
         if(!empty($recherche->getQ())) {
-            $query =$query
+            $query
                 ->andWhere('s.nom LIKE :q')
                 ->setParameter('q', "%{$recherche->getQ()}%");
         }
 
         if (!empty($recherche->getCampus())) {
-            $query = $query
+            $query
                 ->andWhere('s.campus = :campus')
                 ->setParameter('campus', $recherche->getCampus());
         }
 
         if (!empty($recherche->getDateHeureDebut())) {
-            $query = $query
+            $query
                 ->andWhere('s.dateHeureDebut >= :dateHeureDebut')
                 ->setParameter('dateHeureDebut', $recherche->getDateHeureDebut());
         }
 
         if (!empty($recherche->getDateCloture())) {
-            $query = $query
+            $query
                 ->andWhere('s.dateLimiteInscription <= :dateLimiteInscription')
                 ->setParameter('dateLimiteInscription', $recherche->getDateCloture());
         }
-            return $query->getQuery()->getResult();
+
+
+        if((($recherche->isOrganisateur()))) {
+            $query
+                ->andWhere('s.organisateur = :user')
+                ->setParameter('user', $user);
+        }
+
+        if((($recherche->isInscrit()))) {
+            $query
+                ->andWhere(':user MEMBER OF s.inscrits')
+                ->setParameter('user', $user);
+        }
+
+        if((($recherche->isInscrit()))) {
+            $query
+                ->andWhere(':user NOT MEMBER OF s.inscrits')
+                ->setParameter('user', $user);
+        }
+
+        if((($recherche->isPassee()))) {
+            $now = date(strtotime('now'));
+            $query
+                ->andWhere('s.dateHeureDebut <= :now')
+                ->setParameter('now', $now);
+        }
+
+
+        return $query->getQuery()->getResult();
     }
 
     // /**

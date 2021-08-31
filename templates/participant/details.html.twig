@@ -33,7 +33,9 @@
                 <button><a href="{{ path('main_home') }}">Retour</a></button>
                 {% if is_granted("ROLE_ADMIN") and participant.id!=user.id %}
                     <a href="{{ path('participant_delete',{'id':participant.id})}}" title="Supprimer participant"><button>Supprimer</button></a>
-
+                {% endif %}
+                {%  if app.user.id == participant.id  %}
+                <a href="{{ path('participant_modifier', {'id':participant.id}) }}" title="Modifier mon profil">Modifier</a>
                 {% endif %}
             </div>
         </div>

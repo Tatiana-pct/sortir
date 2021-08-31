@@ -7,7 +7,7 @@ use App\Entity\Campus;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,18 +20,19 @@ class rechercheSortieForm extends AbstractType
         $builder
             ->add('campus',
                   EntityType::class, [
+                      'label' => 'Campus',
                       'class' => Campus::class,
                       'choice_label' => 'nom',
                       'required' => false,
                       'query_builder' => function(EntityRepository $repository) {
                           return $repository->createQueryBuilder('c')->orderBy('c.nom', 'ASC');
                       }])
+
             ->add('q', TextType::class, [
                 'label' => false,
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Rechercher',
-                    ''
+                    'placeholder' => 'Rechercher'
                 ]
             ])
 
@@ -52,8 +53,21 @@ class rechercheSortieForm extends AbstractType
                 'attr' => ['class' => 'datepicker'],
             ])
 
+            ->add('organisateur', CheckboxType::class, [
+                'label'=>'sorties dont je suis l\'organisateur/trice',
+                'required' => false,
+            ])
 
-            //TODO: recherche avec Date et options
+            ->add('inscrit', CheckboxType::class, [
+                'label'=>'sorties auxquelles je suis inscrit/e',
+                'required' => false,
+            ])
+
+
+            ->add('passee', CheckboxType::class, [
+                'label'=>'Sorties passées',
+                'required' => false,
+            ])
 
         ;
 

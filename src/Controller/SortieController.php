@@ -22,43 +22,43 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class SortieController extends AbstractController
 {
-    /**
-     * @Route("/liste", name="liste")
-     */
-    public function afficherSorties(EntityManagerInterface $entityManager): Response
-    {
-        //FIND par état des sortie
-        $etatCree = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Création']);
-        $etatPubliee = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Publiée']);
-        $etatAnnulee = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']);
-        $etatCloturee = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Cloturée']);
-        $etatEnCours = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'En Cours']);
-        $etatTerminee = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Terminée']);
-        $etatArchivee = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Archivée']);
-
-        //FIND par villes
-        $villes = $entityManager->getRepository(Sortie::class)->findAll();
-
-        //Récupération des sortie en fonction de l'état
-        $sortiesCrees = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatCree, 'Organisateur' => $this->getUser()]);
-        $sortiesPubliees = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatPubliee]);
-        $sortiesAnnulees = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatAnnulee]);
-        $sortiesCloturees = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatCloturee]);
-        $sortiesEnCours = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatEnCours]);
-        $sortiesTerminees = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatTerminee]);
-        $sortiesArchivees = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatArchivee]);
-
-        return $this->render('main/home.html.twig', [
-            'nomController' => 'SortieController',
-            'sortiesCréees' => $sortiesCrees,
-            'sortiesPubliées' => $sortiesPubliees,
-            'sortiesAnnulées' => $sortiesAnnulees,
-            'sortiesCloturées' => $sortiesCloturees,
-            'sortiesEnCours' => $sortiesEnCours,
-            'sortiesTerminées' => $sortiesTerminees,
-            'sortiesArchivées' => $sortiesArchivees
-        ]);
-    }
+//    /**
+//     * @Route("/liste", name="liste")
+//     */
+//    public function afficherSorties(EntityManagerInterface $entityManager): Response
+//    {
+//        //FIND par état des sortie
+//        $etatCree = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Création']);
+//        $etatPubliee = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Publiée']);
+//        $etatAnnulee = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']);
+//        $etatCloturee = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Cloturée']);
+//        $etatEnCours = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'En Cours']);
+//        $etatTerminee = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Terminée']);
+//        $etatArchivee = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Archivée']);
+//
+//        //FIND par villes
+//        $villes = $entityManager->getRepository(Sortie::class)->findAll();
+//
+//        //Récupération des sortie en fonction de l'état
+//        $sortiesCrees = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatCree, 'Organisateur' => $this->getUser()]);
+//        $sortiesPubliees = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatPubliee]);
+//        $sortiesAnnulees = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatAnnulee]);
+//        $sortiesCloturees = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatCloturee]);
+//        $sortiesEnCours = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatEnCours]);
+//        $sortiesTerminees = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatTerminee]);
+//        $sortiesArchivees = $entityManager->getRepository(Sortie::class)->findBy(['etat' => $etatArchivee]);
+//
+//        return $this->render('main/home.html.twig', [
+//            'nomController' => 'SortieController',
+//            'sortiesCréees' => $sortiesCrees,
+//            'sortiesPubliées' => $sortiesPubliees,
+//            'sortiesAnnulées' => $sortiesAnnulees,
+//            'sortiesCloturées' => $sortiesCloturees,
+//            'sortiesEnCours' => $sortiesEnCours,
+//            'sortiesTerminées' => $sortiesTerminees,
+//            'sortiesArchivées' => $sortiesArchivees
+//        ]);
+//    }
 
     /**
      * @Route("/liste", name="liste")
@@ -71,15 +71,16 @@ class SortieController extends AbstractController
 
         $user = $this->getUser();
 
+
         $data = new RechercheData();
 
         $sortiesform = $this->createForm(rechercheSortieForm::class, $data);
         $sortiesform->handleRequest($request);
-        $sorties = $sortieRepository->trouveData($data);
+        $sorties = $sortieRepository->trouveData($data, $user);
 
         return $this->render('sortie/liste.html.twig', ["sorties" => $sorties,
-            "user"=>$user,
-            'sortiesform'=>$sortiesform->createView()]);
+            "user" => $user,
+            'sortiesform' => $sortiesform->createView()]);
     }
 
 
@@ -96,25 +97,29 @@ class SortieController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
         $sortie->setOrganisateur($user);
+        $now = date('Y-m-d', strtotime('now'));
+        if ($sortie->getDateHeureDebut() > $now) {
 
-        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-            $manager = $this->getDoctrine()->getManager();
+            if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+                $manager = $this->getDoctrine()->getManager();
 
-            if ($sortieForm->get('enregistrer')->isClicked()) {
-                $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Créée']));
-                $this->addFlash('success', "La sortie a créée!");
+                if ($sortieForm->get('enregistrer')->isClicked()) {
+                    $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Créée']));
+                    $this->addFlash('success', "La sortie a créée!");
 
-            } elseif ($sortieForm->get('publier')->isClicked()) {
-                $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
-                $this->addFlash('warning', "La sortie a été publiée !");
+                } elseif ($sortieForm->get('publier')->isClicked()) {
+                    $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
+                    $this->addFlash('warning', "La sortie a été publiée !");
+                }
+
+                $manager->persist($sortie);
+                $manager->flush();
+
+                return $this->redirectToRoute('sortie_details', ['id' => $sortie->getId()]);
             }
-
-            $manager->persist($sortie);
-            $manager->flush();
-
-            return $this->redirectToRoute('sortie_details', ['id' => $sortie->getId()]);
+        } else {
+            $this->addFlash('alerte', 'BLABLA');
         }
-
         return $this->render('sortie/create.html.twig', [
             'sortieForm' => $sortieForm->createView()
         ]);
@@ -144,12 +149,11 @@ class SortieController extends AbstractController
      * @Route("/delete/{id}", name="delete")
      *
      */
-    public function delete(Sortie $sortie, EntityManagerInterface $entityManager): Response
+    public function delete(Sortie $sortie, EntityManagerInterface $em): Response
     {
-        $user = $this->getUser();
 
-        $entityManager->remove($sortie);
-        $entityManager->flush();
+        $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Annulée']));
+        $em->flush();
 
         $this->addFlash('delete', 'Sortie supprimée');
         return $this->redirectToRoute('sortie_liste');
@@ -216,8 +220,10 @@ class SortieController extends AbstractController
 
         $this->addFlash('success', 'Vous n`\'êtes plus inscrit à la sortie ' . $sortie->getNom());
 
-        return $this->render( 'sortie/details.html.twig' , [
+        return $this->render('sortie/details.html.twig', [
             'sortie' => $sortie
         ]);
     }
+
 }
+

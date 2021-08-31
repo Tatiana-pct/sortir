@@ -25,7 +25,7 @@ class RechercheData
     /**
      * @var bool
      */
-    private $organisteur = false;
+    private $organisateur = false;
 
     /**
      * @var bool
@@ -99,17 +99,17 @@ class RechercheData
     /**
      * @return bool
      */
-    public function isOrganisteur(): bool
+    public function isOrganisateur(): bool
     {
-        return $this->organisteur;
+        return $this->organisateur;
     }
 
     /**
-     * @param bool $organisteur
+     * @param bool $organisateur
      */
-    public function setOrganisteur(bool $organisteur): void
+    public function setOrganisateur(bool $organisateur): void
     {
-        $this->organisteur = $organisteur;
+        $this->organisateur = $organisateur;
     }
 
     /**
