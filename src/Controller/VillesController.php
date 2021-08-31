@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\data\RechercheData;
 use App\Entity\Ville;
+use App\Form\RechercheForm;
+use App\Form\RechercheVilleFormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\VillesType;
@@ -20,28 +23,53 @@ class VillesController extends AbstractController
      */
     public function afficherVille(VilleRepository $villeRepository, Request $request, EntityManagerInterface $entityManager)
     {
+        //affichage de la list des villes
         $ville =$villeRepository->findAll();
         $Ville = new Ville();
+
+        //creation du formulaire d'ajout
         $VilleForm =$this->createForm(VillesType::class,$Ville);
         $VilleForm->handleRequest($request);
 
+        //validation du formulaire d'ajout d'une ville
         if($VilleForm->isSubmitted() && $VilleForm->isValid()) {
             $entityManager->persist($Ville);
             $entityManager->flush();
 
+        //affichage d'un message lors du succes d'ajout d'une ville
             $this->addFlash('succes','Ville ajoutée!');
+
+        //retirection de donne vers la page
             return $this->redirectToRoute('villes_liste');
         }
 
+        //declaration du formulaire de recherche
+        $rechercheVilleForm = $this->createForm(RechercheVilleFormType::class, $ville);
+        $rechercheVilleForm->handleRequest($request);
+
+        //validation du formulaire de recherched'une ville
+        if ($rechercheVilleForm->isSubmitted()&&$rechercheVilleForm->isValid()){
+            $entityManager->persist($Ville);
+            $entityManager->flush();
+
+        //rediection de la reponse
+            return $this->redirectToRoute('villes_liste',["villes" => $ville]);
+        }
 
 
         return $this->render('villes/list.html.twig',[
             "ville" => $ville,
-            'villeForm' => $VilleForm->createView()
+            'villeForm' => $VilleForm->createView(),
+            'rechercheVilleForm'=> $rechercheVilleForm-> createView()
+
         ]);
 
 
+
     }
+
+
+
 
 
 
