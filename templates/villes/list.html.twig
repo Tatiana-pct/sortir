@@ -5,10 +5,12 @@
 {% block body %}
     <div>
         <h1 >Gerer les villes</h1>
-
+        // TODO: faire methode de recherche d'une ville
+        <h2>Rechercher une ville</h2>
         {{ form_start(rechercheVilleForm) }}
         {{ form_widget(rechercheVilleForm) }}
         {{ form_end(rechercheVilleForm) }}
+        <br>
         <button>Rechercher</button>
 
 
@@ -63,13 +65,10 @@
 
     <h2>Ajouter une ville</h2>
         {{ form_start(villeForm) }}
-
         {{ form_widget(villeForm) }}
-
         <a href="{{ path('villes_liste') }}"><button class="btn btn-primary">Ajouter</button></a>
-        // TODO: faire methode de suppression des campus
+        // TODO: faire methode de suppression des villes
         <a href="{{ path('villes_delete') }}"><button class="btn btn-primary">Supprimer</button></a>
-
         {{ form_end(villeForm) }}
 
     {% endif %}

@@ -21,7 +21,7 @@ class VillesType extends AbstractType
                ])
                ->add('codePostal', null,[
                    'label' => 'Code Postal',
-                   'required' => true,
+                   'required' => false,
                    'attr' =>[
                        'class' => 'form-control']
                ]);

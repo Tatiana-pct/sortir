@@ -2,27 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\Ville;
+use App\Entity\Campus;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RechercheVilleFormType extends AbstractType
+class RechercheCampusFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('nom')
-            ->add('codePostal', null)
+
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => null,
-
-
+            'data_class' => Campus::class,
         ]);
     }
 }

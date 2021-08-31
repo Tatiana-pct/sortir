@@ -26,6 +26,8 @@ class VillesController extends AbstractController
         //affichage de la list des villes
         $ville =$villeRepository->findAll();
         $Ville = new Ville();
+
+        //creation du formulaire d'ajout
         $VilleForm =$this->createForm(VillesType::class,$Ville);
         $VilleForm->handleRequest($request);
 
@@ -42,9 +44,18 @@ class VillesController extends AbstractController
         }
 
         //declaration du formulaire de recherche
-
         $rechercheVilleForm = $this->createForm(RechercheVilleFormType::class, $ville);
         $rechercheVilleForm->handleRequest($request);
+
+        //validation du formulaire de recherched'une ville
+        if ($rechercheVilleForm->isSubmitted()&&$rechercheVilleForm->isValid()){
+            $entityManager->persist($Ville);
+            $entityManager->flush();
+
+        //rediection de la reponse
+            return $this->redirectToRoute('villes_liste',["villes" => $ville]);
+        }
+
 
         return $this->render('villes/list.html.twig',[
             "ville" => $ville,
