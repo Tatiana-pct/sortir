@@ -23,39 +23,42 @@ class VillesController extends AbstractController
      */
     public function afficherVille(VilleRepository $villeRepository, Request $request, EntityManagerInterface $entityManager)
     {
-
+        //affichage de la list des villes
         $ville =$villeRepository->findAll();
         $Ville = new Ville();
         $VilleForm =$this->createForm(VillesType::class,$Ville);
         $VilleForm->handleRequest($request);
 
+        //validation du formulaire d'ajout d'une ville
         if($VilleForm->isSubmitted() && $VilleForm->isValid()) {
             $entityManager->persist($Ville);
             $entityManager->flush();
 
+        //affichage d'un message lors du succes d'ajout d'une ville
             $this->addFlash('succes','Ville ajoutée!');
+
+        //retirection de donne vers la page
             return $this->redirectToRoute('villes_liste');
         }
 
-        return $this->render('villes/list.html.twig',[
-            "ville" => $ville,
-            'villeForm' => $VilleForm->createView()
+        //declaration du formulaire de recherche
 
-        ]);
-    }
-
-    public function Recherche(Request  $request)
-    {
-        //declaration de la recherche
-
-        $data = new RechercheData();
-        $rechercheVilleForm = $this->createForm(RechercheVilleFormType::class, $data);
+        $rechercheVilleForm = $this->createForm(RechercheVilleFormType::class, $ville);
         $rechercheVilleForm->handleRequest($request);
 
-        return $this->render('villes/_filter.html.twig',[
+        return $this->render('villes/list.html.twig',[
+            "ville" => $ville,
+            'villeForm' => $VilleForm->createView(),
             'rechercheVilleForm'=> $rechercheVilleForm-> createView()
+
         ]);
+
+
+
     }
+
+
+
 
 
 

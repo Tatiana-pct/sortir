@@ -6,7 +6,13 @@
     <div>
         <h1 >Gerer les villes</h1>
 
-                    {% include 'villes/_filter.html.twig' %}
+        {{ form_start(rechercheVilleForm) }}
+        {{ form_widget(rechercheVilleForm) }}
+        {{ form_end(rechercheVilleForm) }}
+        <button>Rechercher</button>
+
+
+
 
 
         <table  style="width:100%">
