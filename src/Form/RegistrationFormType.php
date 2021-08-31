@@ -56,6 +56,7 @@ class RegistrationFormType extends AbstractType
 
             ->add('image', ImageType::class, [
                 'label'=>false,
+                'required'=>false,
             ])
             ->add('enregistrer', SubmitType::class, [
                 'label' => 'Enregistrer'
