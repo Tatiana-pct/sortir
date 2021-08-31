@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\data\RechercheData;
 use App\Entity\Ville;
+use App\Form\RechercheForm;
+use App\Form\RechercheVilleFormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\VillesType;
@@ -20,6 +23,7 @@ class VillesController extends AbstractController
      */
     public function afficherVille(VilleRepository $villeRepository, Request $request, EntityManagerInterface $entityManager)
     {
+
         $ville =$villeRepository->findAll();
         $Ville = new Ville();
         $VilleForm =$this->createForm(VillesType::class,$Ville);
@@ -33,14 +37,24 @@ class VillesController extends AbstractController
             return $this->redirectToRoute('villes_liste');
         }
 
-
-
         return $this->render('villes/list.html.twig',[
             "ville" => $ville,
             'villeForm' => $VilleForm->createView()
+
         ]);
+    }
 
+    public function Recherche(Request  $request)
+    {
+        //declaration de la recherche
 
+        $data = new RechercheData();
+        $rechercheVilleForm = $this->createForm(RechercheVilleFormType::class, $data);
+        $rechercheVilleForm->handleRequest($request);
+
+        return $this->render('villes/_filter.html.twig',[
+            'rechercheVilleForm'=> $rechercheVilleForm-> createView()
+        ]);
     }
 
 

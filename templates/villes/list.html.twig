@@ -5,20 +5,16 @@
 {% block body %}
     <div>
         <h1 >Gerer les villes</h1>
-        <div>
 
-
-            #afficher le formulaire de recherche
-            <input type="button" name="recherche" value="recherche">
-        </div>
+                    {% include 'villes/_filter.html.twig' %}
 
 
         <table  style="width:100%">
             <thead>
             <th>
-            <td >id</td>
-            <td >Nom</td>
-            <td >Code postale</td>
+            <td >nom</td>
+            <td >code postale</td>
+
 
             {% if is_granted('ROLE_ADMIN') %}
 
@@ -58,7 +54,7 @@
     <div>
     <br>
     {% if is_granted('ROLE_ADMIN') %}
-        #afficher le formulaire d'ajout
+
     <h2>Ajouter une ville</h2>
         {{ form_start(villeForm) }}
 

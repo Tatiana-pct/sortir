@@ -38,6 +38,8 @@ class RechercheData
     private $passee = false;
 
 
+
+
     public function getQ()
     {
         return $this->q;
@@ -142,6 +144,10 @@ class RechercheData
     public function setPassee(bool $passee): void
     {
         $this->passee = $passee;
+    }
+
+    public function getVille()
+    {
     }
 
 }
