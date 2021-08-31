@@ -46,5 +46,17 @@ class CampusRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    */
+
+
+     //TODO: la methode de recherche
+
+   /**
+    *Récuperer les campus en lien avec la recherche
+     *@return Campus[]
+     */
+   // public function findSearch():array
+   // {
+   // return $this->findAll();
+   // }
+
 }
