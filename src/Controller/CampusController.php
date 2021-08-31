@@ -41,6 +41,10 @@ class CampusController extends AbstractController
             return $this->redirectToRoute('campus_liste');
         }
 
+        //TODO: la methode de recherche
+       // $campus= $CampusRepository->findSearch();
+
+
         return $this->render('campus/list.html.twig',[
             "Campus" => $campus,
             "CampusForm" => $CampusForm->createView(),
