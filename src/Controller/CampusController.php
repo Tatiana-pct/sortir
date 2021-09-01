@@ -86,6 +86,7 @@ class CampusController extends AbstractController
             'attr' => ['class' =>'btn-Editer' ]
 
         ]);
+
         $CampusForm->handleRequest($request);
         if ($CampusForm->isSubmitted()&& $CampusForm->isValid()){
             $Campus =$CampusForm->getData();
