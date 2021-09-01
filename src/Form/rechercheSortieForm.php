@@ -63,6 +63,11 @@ class rechercheSortieForm extends AbstractType
                 'required' => false,
             ])
 
+            ->add('notInscrit', CheckboxType::class, [
+                'label'=>'sorties auxquelles je ne suis pas inscrit/e',
+                'required' => false,
+            ])
+
 
             ->add('passee', CheckboxType::class, [
                 'label'=>'Sorties passées',

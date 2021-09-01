@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier sortie{% endblock %}
+
+{% block body %}
+    <h2>Modifier une Sortie</h2>
+
+    <div> <h2> {{ app.user.pseudo }}</h2>
+
+        <div>
+            {{ form_start(registrationForm) }}
+            {{ form_widget(registrationForm) }}
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+{% endblock %}

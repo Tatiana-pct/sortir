@@ -225,5 +225,44 @@ class SortieController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/modifier/{id}", name="modifier")
+     */
+    public function modifierSortie(int $id,
+                                   Request $request,
+                                   EntityManagerInterface $em,
+                                   UserInterface          $user,
+                                   ParticipantRepository  $participantRepository,
+                                   SortieRepository       $sortieRepository) : Response
+    {
+        $sortie = $sortieRepository->findById($id);
+        $user = $this->getUser();
+
+        $modifierSortieForm = $this->createForm(SortieFormType::class, $sortie);
+        $modifierSortieForm->handleRequest($request);
+
+        if($user != $sortie->getOrganisateur()) {
+            $this->addFlash('fail', 'Vous ne pouvez pas modifier cette sortie !');
+        }
+
+        if ($modifierSortieForm->isSubmitted()) {
+            if ($modifierSortieForm->isValid()) {
+
+                $em->persist($sortie);
+                $em->flush();
+
+                $this->addFlash('success', 'Sortie modifié !');
+                return $this->redirectToRoute('sortie_details', ['id' => $sortie->getId()]
+                );
+            } else {
+            $em->refresh($sortie);
+            }
+        }
+        return $this->render('sortie/modifier.html.twig', [
+            'registrationForm' => $modifierSortieForm->createView(),
+            'user' => $user,
+            'sortie'=>$sortie
+            ]);
+        }
 }
 

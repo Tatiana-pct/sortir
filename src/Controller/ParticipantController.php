@@ -84,8 +84,8 @@ class ParticipantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            //séparé en 2 if pour pouvoir faire le refresh si le form n'est pas valide
             if ($form->isValid()){
+
 
 
                 $file=$form->get('image')->getData()->getFile();
@@ -94,18 +94,19 @@ class ParticipantController extends AbstractController
                 $file->move('../public/image/imagesProfil', $nomImage);
 
                 $image= new Image();
+
+                $participant->getImage($image);
                 $image->setNom($nomImage);
-
-
                 $participant->setImage($image);
+
+
                 $em->persist($user);
                 $em->flush();
 
                 $this->addFlash('success', 'Profil modifié !');
                 return $this->redirectToRoute('participant_details', ['id' => $participant->getId()]
                 );
-            }
-            else {
+            } else {
                 $em->refresh($user);
             }
         }
