@@ -27,7 +27,6 @@ class FilterType extends AbstractType
             ])
             ->add('mots', SearchType::class,[
                 'label' => 'Recherche par mots clef',
-                'mapped' => false,
                 'required' => false
             ])
 
@@ -35,37 +34,35 @@ class FilterType extends AbstractType
                 'label' => "Date de début",
                 'html5'  => true,
                 'required' => false,
-                'mapped' => false,
                 'widget' => 'single_text'
             ])
             ->add('dateLimiteInscription', DateType::class, [
                 'label' => "Date de fin",
                 'html5'  => true,
                 'required' => false,
-                'mapped' => false,
                 'widget' => 'single_text'
             ])
 
             ->add('organisateur', CheckboxType::class,[
-                'label' => 'Sortie dont je suis l\'organisateur',
+                'label' => 'Sortie dont je suis l\'organisateur/trice',
                 'required' => false,
-                'mapped' => false
             ])
-            ->add('inscrit', CheckboxType::class,[
-                'label' => 'Sortie auxquelles je suis inscrit',
+
+//            ->add('inscrit', CheckboxType::class,[
+//                'label' => 'Sortie auxquelles je suis inscrit/e',
+//                'required' => false,
+//            ])
+
+            ->add('notInscrit', CheckboxType::class,[
+                'label' => 'Sortie auxquelles je ne suis pas inscrit/e',
                 'required' => false,
-                'mapped' => false
             ])
-            ->add('pasInscrit', CheckboxType::class,[
-                'label' => 'Sortie auxquelles je ne suis pas inscrit',
-                'required' => false,
-                'mapped' => false
-            ])
+
             ->add('dejaPasse', CheckboxType::class,[
                 'label' => 'Sortie passées',
                 'required' => false,
-                'mapped' => false
             ])
+
             ->add('Rechercher', SubmitType::class, [
                 'attr' =>[
                     'class' => 'btn'

@@ -35,6 +35,11 @@ class RechercheData
     /**
      * @var bool
      */
+    private $notInscrit = false;
+
+    /**
+     * @var bool
+     */
     private $passee = false;
 
 
@@ -99,7 +104,7 @@ class RechercheData
 
 
     /**
-     * @return bool
+     * @return bool|null
      */
     public function isOrganisateur(): bool
     {
@@ -107,7 +112,7 @@ class RechercheData
     }
 
     /**
-     * @param bool $organisateur
+     * @param bool|null $organisateur
      */
     public function setOrganisateur(bool $organisateur): void
     {
@@ -115,15 +120,16 @@ class RechercheData
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
     public function isInscrit(): bool
     {
         return $this->inscrit;
     }
 
+
     /**
-     * @param bool $inscrit
+     * @param bool|null $inscrit
      */
     public function setInscrit(bool $inscrit): void
     {
@@ -131,7 +137,23 @@ class RechercheData
     }
 
     /**
-     * @return bool
+     * @return bool|null
+     */
+    public function isNotInscrit(): bool
+    {
+        return $this->notInscrit;
+    }
+
+    /**
+     * @param bool|null $notInscrit
+     */
+    public function setNotInscrit(bool $notInscrit): void
+    {
+        $this->notInscrit = $notInscrit;
+    }
+
+    /**
+     * @return bool|null
      */
     public function isPassee(): bool
     {

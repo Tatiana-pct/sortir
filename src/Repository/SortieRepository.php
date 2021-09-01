@@ -5,10 +5,10 @@ namespace App\Repository;
 use App\data\RechercheData;
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\DBAL\Types\DateType;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 
 /**
@@ -98,17 +98,18 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('user', $user);
         }
 
-        if((($recherche->isInscrit()))) {
+        if((($recherche->isNotInscrit()))) {
             $query
                 ->andWhere(':user NOT MEMBER OF s.inscrits')
                 ->setParameter('user', $user);
         }
 
         if((($recherche->isPassee()))) {
-            $now = date(strtotime('now'));
+            $now = new DateTime();
             $query
                 ->andWhere('s.dateHeureDebut <= :now')
                 ->setParameter('now', $now);
+
         }
 
 
