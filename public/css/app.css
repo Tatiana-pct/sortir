@@ -90,6 +90,23 @@ body> .container{
     flex-direction: column;
     min-height: 100vh;
 }
+
+td {
+    border:darkgray solid;
+}
+
+th {
+    border: black solid;
+}
+
+.tab-filtre {
+    width: 96em;
+    border: black solid;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 footer {
     padding: 2rem 0;
     text-align: center;
