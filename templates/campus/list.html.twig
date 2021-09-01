@@ -6,16 +6,25 @@
     <div>
         <h1 >Gerer les Campus</h1>
         <div>
-            #afficher le formulaire de recherche
-            <input type="button" name="recherche" value="recherche">
+            // TODO: faire methode de recherche d'une ville
+            <h2>Rechercher une ville</h2>
+
+            <a href="{{ path('campus_liste') }}"><button class="btn btn-primary">rechercher</button></a>
+
+
+
+
+            <br>
+
+
         </div>
 
 
         <table  style="width:100%">
             <thead>
             <th>
-            <td >id</td>
-            <td >Nom</td>
+            <td> nom</td>
+            <td >action/td>
 
 
             {% if is_granted('ROLE_ADMIN') %}

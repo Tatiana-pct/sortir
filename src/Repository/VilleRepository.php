@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\data\RechercheData;
 use App\Entity\Ville;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -47,4 +48,15 @@ class VilleRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * recupere les ville en lien avec une recheche
+     * @return  ville[]
+     */
+    public function findSearch():array
+    {
+        return $this->findAll();
+    }
+
+
 }

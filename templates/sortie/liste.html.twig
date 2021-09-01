@@ -7,51 +7,54 @@
             {{ form_start(sortiesform) }}
 
             {{ form_widget(sortiesform) }}
-<button type="submit">Filtrer</button>
+            <br><button type="submit">Rechercher</button>
             {{ form_end(sortiesform) }}
 
-        </div>
+        </div><br>
     </section>
     <div>
-    <section>
-        <table>
-            <tr>
-                <th>Nom de la sortie</th>
-                <th>Date de la sortie</th>
-                <th>Clôture</th>
-                <th>Inscrits/places</th>
-                <th>Etat</th>
-                <th>Inscrit</th>
-                <th>Organisateur</th>
-                <th>Actions</th>
-            </tr>
-
-            {% for sortie in sorties %}
+        <section>
+            <table>
                 <tr>
-                    <td>{{ sortie.nom }}</td>
-                    <td>{{ sortie.dateHeureDebut.format('d/m/Y H:i') }}</td>
-                    <td>{{ sortie.dateLimiteInscription.format('d/m/Y') }}</td>
-                    <td>{{ sortie.inscrits.count}} / {{ sortie.nbInscriptionsMax }}</td>
-                    <td>{{ sortie.etat.libelle }}</td>
-                    <td>
-                        {% if user in sortie.inscrits %}
-                            Inscrit
-                        {% else %}
-                            Non-inscrit
-                        {% endif %}
-                    </td>
-                    <td><a href="{{ path('participant_details', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
-                    <td>
-                        <a href="{{ path('sortie_details', {'id': sortie.id}) }}">Afficher</a>
-                        {% if user not in sortie.inscrits %}
-                            <a href="{{ path('sortie_inscription', {'id':sortie.id}) }}">S'inscrire</a>
-                        {% elseif user in sortie.inscrits %}
-                            <a href="{{ path('sortie_desister', {'id':sortie.id}) }}">Se désinscrire</a>
-                        {% endif %}
-
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Clôture</th>
+                    <th>Inscrits/places</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>Actions</th>
                 </tr>
-            {% endfor %}
-        </table>
-    </section>
 
+                {% for sortie in sorties %}
+                    <tr>
+                        <td>{{ sortie.nom }}</td>
+                        <td>{{ sortie.dateHeureDebut.format('d/m/Y H:i') }}</td>
+                        <td>{{ sortie.dateLimiteInscription.format('d/m/Y') }}</td>
+                        <td>{{ sortie.inscrits.count}} / {{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.etat.libelle }}</td>
+                        <td>
+                            {% if user in sortie.inscrits %}
+                                Inscrit
+                            {% else %}
+                                Non-inscrit
+                            {% endif %}
+                        </td>
+                        <td><a href="{{ path('participant_details', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
+                        <td>
+                            <a href="{{ path('sortie_details', {'id': sortie.id}) }}">Afficher</a>
+                            {% if user not in sortie.inscrits %}
+                                <a href="{{ path('sortie_inscription', {'id':sortie.id}) }}">S'inscrire</a>
+                            {% elseif user in sortie.inscrits %}
+                                <a href="{{ path('sortie_desister', {'id':sortie.id}) }}">Se désinscrire</a>
+                            {% endif %}
+
+                    </tr>
+                {% endfor %}
+            </table>
+        </section><br>
+        {% if app.user.administrateur == 1 %}
+            <a href="{{ path('sortie_create') }}">Créer une sortie</a>
+        {% endif %}
+    </div>
 {% endblock %}

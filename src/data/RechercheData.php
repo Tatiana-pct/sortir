@@ -25,7 +25,7 @@ class RechercheData
     /**
      * @var bool
      */
-    private $organisteur = false;
+    private $organisateur = false;
 
     /**
      * @var bool
@@ -36,6 +36,8 @@ class RechercheData
      * @var bool
      */
     private $passee = false;
+
+
 
 
     public function getQ()
@@ -99,17 +101,17 @@ class RechercheData
     /**
      * @return bool
      */
-    public function isOrganisteur(): bool
+    public function isOrganisateur(): bool
     {
-        return $this->organisteur;
+        return $this->organisateur;
     }
 
     /**
-     * @param bool $organisteur
+     * @param bool $organisateur
      */
-    public function setOrganisteur(bool $organisteur): void
+    public function setOrganisateur(bool $organisateur): void
     {
-        $this->organisteur = $organisteur;
+        $this->organisateur = $organisateur;
     }
 
     /**
@@ -142,6 +144,10 @@ class RechercheData
     public function setPassee(bool $passee): void
     {
         $this->passee = $passee;
+    }
+
+    public function getVille()
+    {
     }
 
 }

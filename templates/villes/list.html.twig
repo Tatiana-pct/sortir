@@ -5,20 +5,24 @@
 {% block body %}
     <div>
         <h1 >Gerer les villes</h1>
-        <div>
+        // TODO: faire methode de recherche d'une ville
+        <h2>Rechercher une ville</h2>
+        {{ form_start(rechercheVilleForm) }}
+        {{ form_widget(rechercheVilleForm) }}
+        {{ form_end(rechercheVilleForm) }}
+        <br>
+        <button>Rechercher</button>
 
 
-            #afficher le formulaire de recherche
-            <input type="button" name="recherche" value="recherche">
-        </div>
+
 
 
         <table  style="width:100%">
             <thead>
             <th>
-            <td >id</td>
-            <td >Nom</td>
-            <td >Code postale</td>
+            <td >nom</td>
+            <td >code postale</td>
+
 
             {% if is_granted('ROLE_ADMIN') %}
 
@@ -58,16 +62,13 @@
     <div>
     <br>
     {% if is_granted('ROLE_ADMIN') %}
-        #afficher le formulaire d'ajout
+
     <h2>Ajouter une ville</h2>
         {{ form_start(villeForm) }}
-
         {{ form_widget(villeForm) }}
-
         <a href="{{ path('villes_liste') }}"><button class="btn btn-primary">Ajouter</button></a>
-        // TODO: faire methode de suppression des campus
+        // TODO: faire methode de suppression des villes
         <a href="{{ path('villes_delete') }}"><button class="btn btn-primary">Supprimer</button></a>
-
         {{ form_end(villeForm) }}
 
     {% endif %}
