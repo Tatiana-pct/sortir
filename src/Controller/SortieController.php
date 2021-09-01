@@ -118,7 +118,7 @@ class SortieController extends AbstractController
                 return $this->redirectToRoute('sortie_details', ['id' => $sortie->getId()]);
             }
         } else {
-            $this->addFlash('alerte', 'BLABLA');
+            $this->addFlash('alerte', 'La sortie ne peut pas être avant demain !');
         }
         return $this->render('sortie/create.html.twig', [
             'sortieForm' => $sortieForm->createView()
