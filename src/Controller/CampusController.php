@@ -79,15 +79,17 @@ class CampusController extends AbstractController
     public function editCampus(int $id, EntityManagerInterface $entityManager, Request $request)
     {
         $Campus = new Campus();
-        $form = $this->createForm(CampusType::class, $Campus);
-        $form->remove('submit');
-        $form->add('submit',SubmitType::class,[
+        $CampusForm = $this->createForm(CampusType::class, $Campus);
+        $CampusForm->remove('submit');
+        $CampusForm->add('submit',SubmitType::class,[
             'label' => 'modifier',
+            'attr' => ['class' =>'btn-Editer' ]
 
         ]);
-        $form->handleRequest($request);
-        if ($form->isSubmitted()&& $form->isValid()){
-            $Campus =$form->getData();
+
+        $CampusForm->handleRequest($request);
+        if ($CampusForm->isSubmitted()&& $CampusForm->isValid()){
+            $Campus =$CampusForm->getData();
 
             $entityManager->persist($Campus);
             $entityManager->flush();
@@ -98,7 +100,11 @@ class CampusController extends AbstractController
 
 
 
-        return $this->render('campus/list.html.twig');
+        return $this->render('campus/list.html.twig',[
+            'Campus' => $Campus,
+            "CampusForm" => $CampusForm->createView(),
+
+        ]);
     }
 
 

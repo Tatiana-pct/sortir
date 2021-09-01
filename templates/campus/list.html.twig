@@ -24,7 +24,7 @@
             <thead>
             <th>
             <td> nom</td>
-            <td >action/td>
+            <td >action</td>
 
 
             {% if is_granted('ROLE_ADMIN') %}
@@ -72,10 +72,12 @@
             {{ form_widget(CampusForm) }}
 
 
-            <a href="{{ path('campus_liste') }}"><button class="btn btn-primary">Ajouter</button></a>
+            <a href="{{ path('campus_liste') }}"><button class="btn-Ajouter">Ajouter</button></a>
 
             // TODO: faire methode de suppression des campus
-            <a href="{{ path('campus_delete') }}"><button class="btn btn-primary">Supprimer</button></a>
+            <a href="{{ path('campus_delete') }}"><button class="btn-Supprimer">Supprimer</button></a>
+
+            <a href="{{ path('campus_edit') }}"><button class="btn-Editer">Modifier</button></a>
 
             {{ form_end(CampusForm) }}
 

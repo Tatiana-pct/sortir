@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\data\RechercheData;
 use App\Entity\Ville;
-use App\Form\RechercheForm;
 use App\Form\RechercheVilleFormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,8 +42,10 @@ class VillesController extends AbstractController
         }
 
         //declaration du formulaire de recherche
+
         $rechercheVilleForm = $this->createForm(RechercheVilleFormType::class, $ville);
         $rechercheVilleForm->handleRequest($request);
+
 
         //validation du formulaire de recherched'une ville
         if ($rechercheVilleForm->isSubmitted()&&$rechercheVilleForm->isValid()){
@@ -67,12 +67,6 @@ class VillesController extends AbstractController
 
 
     }
-
-
-
-
-
-
 
 
     /**
