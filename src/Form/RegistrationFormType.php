@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Campus;
 use App\Entity\Participant;
+use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -17,7 +18,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder,
+                              array $options)
     {
         $builder
             ->add('pseudo')
@@ -32,11 +34,11 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                                     'message' => 'Please enter a password',
+                                     'message' => 'Veuillez saisir un mot de passe',
                                  ]),
                     new Length([
                                    'min' => 6,
-                                   'minMessage' => 'Your password should be at least {{ limit }} characters',
+                                   'minMessage' => 'Votre mot de passe doit faire au moins 6 caractères',
                                    // max length allowed by Symfony for security reasons
                                    'max' => 4096,
                                ]),
@@ -51,6 +53,7 @@ class RegistrationFormType extends AbstractType
                       }])
 
             ->add('administrateur')
+
 
             ->add('actif')
 

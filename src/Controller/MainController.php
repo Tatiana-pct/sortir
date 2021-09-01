@@ -13,9 +13,11 @@ class MainController extends AbstractController
      */
     public function home()
     {
-
-            return $this->render('main/home.html.twig');
-
+        if ($this->getUser()) {
+            return $this->redirectToRoute('sortie_liste');
+        } else {
+            return $this->redirectToRoute('app_login');
+        }
     }
 
 

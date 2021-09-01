@@ -43,12 +43,19 @@
                         <td><a href="{{ path('participant_details', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
                         <td>
                             <a href="{{ path('sortie_details', {'id': sortie.id}) }}">Afficher</a>
-                            {% if user not in sortie.inscrits %}
-                                <a href="{{ path('sortie_inscription', {'id':sortie.id}) }}">S'inscrire</a>
-                            {% elseif user in sortie.inscrits %}
-                                <a href="{{ path('sortie_desister', {'id':sortie.id}) }}">Se désinscrire</a>
+                            {% if sortie.etat.id == 9  %}
+                                {% if user not in sortie.inscrits%}
+                                    <a href="{{ path('sortie_inscription', {'id':sortie.id}) }}">S'inscrire</a>
+                                {% elseif user in sortie.inscrits %}
+                                    <a href="{{ path('sortie_desister', {'id':sortie.id}) }}">Se désinscrire</a>
+                                {% endif %}
+                                {% if app.user.administrateur == 1%}
+                                    <a href="{{ path('sortie_delete', {'id':sortie.id}) }}">Supprimer la sortie</a>
+                                {% endif %}
+                            {% endif%}
+                            {% if sortie.etat.id == 8 and app.user.administrateur == 1 %}
+                                <a href="{{ path('sortie_publier', {'id':sortie.id}) }}">Publier la sortie</a>
                             {% endif %}
-
                     </tr>
                 {% endfor %}
             </table>

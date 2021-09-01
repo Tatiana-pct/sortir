@@ -36,14 +36,14 @@ class ParticipantController extends AbstractController
     /**
      * @Route ("/delete/{id}", name="delete")
      */
-    public function delete(Participant $participant,
+    public function delete(Participant            $participant,
                            EntityManagerInterface $entityManager): Response
     {
 
         $img = $participant->getImage();
-        $nomeImg=$img->getNom();
+        $nomeImg = $img->getNom();
 
-        unlink('../public/image/imagesProfil/'.$nomeImg);
+        unlink('../public/image/imagesProfil/' . $nomeImg);
 
         $entityManager->remove($participant);
         $entityManager->flush();
@@ -55,18 +55,18 @@ class ParticipantController extends AbstractController
     /**
      * @Route("/details/{id}", name="details")
      */
-    public function details(int $id,
+    public function details(int                   $id,
                             ParticipantRepository $participantRepository,
-                            UserInterface $user): Response
+                            UserInterface         $user): Response
     {
-        $user=$this->getUser();
+        $user = $this->getUser();
         $participant = $participantRepository->find($id);
         if (!$participant) {
             throw $this->createNotFoundException('!');
         }
 
         return $this->render('participant/details.html.twig', ["participant" => $participant,
-            "user"=>$user]);
+            "user" => $user]);
     }
 
 
@@ -76,24 +76,21 @@ class ParticipantController extends AbstractController
     public function modifier(Request $request, Participant $participant): Response
     {
         $em = $this->getDoctrine()->getManager();
-        //récupère le user en session
-        //ne jamais récupérer le user en fonction de l'id dans l'URL !
         $user = $this->getUser();
 
         $form = $this->createForm(ParticipantType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            if ($form->isValid()){
+            if ($form->isValid()) {
+//TODO: problème si pas d'image
 
-
-
-                $file=$form->get('image')->getData()->getFile();
-                $nomImage = md5(uniqid()). '.'.$participant->getPseudo(). '.' .$file->guessExtension();
+                $file = $form->get('image')->getData()->getFile();
+                $nomImage = md5(uniqid()) . '.' . $participant->getPseudo() . '.' . $file->guessExtension();
 
                 $file->move('../public/image/imagesProfil', $nomImage);
 
-                $image= new Image();
+                $image = new Image();
 
                 $participant->getImage($image);
                 $image->setNom($nomImage);
@@ -114,46 +111,9 @@ class ParticipantController extends AbstractController
         return $this->render('participant/modifier.html.twig', [
             'registrationForm' => $form->createView(),
             'user' => $user,
-            'participant'=>$participant
+            'participant' => $participant
 
         ]);
     }
-
-//    /**
-//     * Modification du profil
-//     *
-//     * @Route("/modification/mot-de-passe", name="user_edit_password")
-//     */
-//    public function editPassword(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder): Response
-//    {
-//        //récupère le user en session
-//        //ne jamais récupérer le user en fonction de l'id dans l'URL !
-//        /** @var User $user */
-//        $user = $this->getUser();
-//
-//        $form = $this->createForm(EditPasswordType::class);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//
-//            $hash = $passwordEncoder->encodePassword($user, $form->get('new_password')->getData());
-//            $user->setPassword($hash);
-//
-//            $entityManager->persist($user);
-//            $entityManager->flush();
-//
-//            $this->addFlash('success', 'Mot de passe modifié !');
-//            //sinon ça bugue dans la session, ça me déconnecte
-//            //refresh() permet de re-récupérer les données fraîches depuis la bdd
-//            $entityManager->refresh($user);
-//
-//            return $this->redirectToRoute("user_profile", ["id" => $user->getId()]);
-//        }
-//
-//        return $this->render('user/edit_password.html.twig', [
-//            'form' => $form->createView(),
-//        ]);
-//    }
-
 
 }

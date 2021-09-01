@@ -73,7 +73,6 @@
             {% if sortie.etat.id == 8 %}
                 <div><a href="{{ path('sortie_publier',{'id':sortie.id}) }}" title="publier sortie"><button>Publier la sortie</button></a></div>
             {% endif %}
-            {# TODO: probleme avec delete sortie "App\Entity\Sortie object not found by the @ParamConverter annotation." #}
             {% if sortie.etat.id == 9 and app.user.administrateur == 1%}
                 <a href="{{ path('sortie_delete',{'id':sortie.id}) }}">Supprimer sortie</a>
             {% endif %}

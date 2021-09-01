@@ -42,8 +42,8 @@ class SortieFormType extends AbstractType
                   [
                       'label' => 'Durée en minutes',
                       'attr' => [
-                          'min' => '1',
-                          'max' => '100'],
+                          'min' => '60',
+                          'max' => '1440'],
                   ])
 
             ->add('dateLimiteInscription',

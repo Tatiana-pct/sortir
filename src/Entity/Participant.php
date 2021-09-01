@@ -274,7 +274,7 @@ class Participant implements UserInterface
      */
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+
     }
 
     public function setRoles(array $roles): self

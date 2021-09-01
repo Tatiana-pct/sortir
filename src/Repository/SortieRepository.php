@@ -50,14 +50,13 @@ class SortieRepository extends ServiceEntityRepository
         $query = $this
             ->createQueryBuilder('s')
             ->select('c','s')
-            ->join('s.campus','c');
-
+            ->join('s.campus','c')
+            ->join('s.etat', 'e')
+            ->addSelect('e');
 
         $query = $query
-            ->andWhere('s.etat != 10 ')
-            ->andWhere('s.etat != 12 ')
-            ->andWhere('s.etat != 13 ')
-            ->andWhere('s.etat != 14 ');
+            ->andWhere('e.id = 8 OR e.id =9 OR e.id =11');
+
 
 
         if(!empty($recherche->getQ())) {
@@ -85,25 +84,25 @@ class SortieRepository extends ServiceEntityRepository
         }
 
 
-        if((($recherche->isOrganisateur()))) {
+        if($recherche->isOrganisateur()) {
             $query
                 ->andWhere('s.organisateur = :user')
                 ->setParameter('user', $user);
         }
 
-        if((($recherche->isInscrit()))) {
+        if($recherche->isInscrit()) {
             $query
                 ->andWhere(':user MEMBER OF s.inscrits')
                 ->setParameter('user', $user);
         }
 
-        if((($recherche->isNotInscrit()))) {
+        if($recherche->isNotInscrit()) {
             $query
                 ->andWhere(':user NOT MEMBER OF s.inscrits')
                 ->setParameter('user', $user);
         }
 
-        if((($recherche->isPassee()))) {
+        if(!empty($recherche->isPassee())) {
             $now = new DateTime();
             $query
                 ->andWhere('s.dateHeureDebut <= :now')

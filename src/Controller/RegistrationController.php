@@ -31,9 +31,10 @@ class RegistrationController extends AbstractController
             $participant->setRoles(["ROLE_ADMIN"]);
         } else {
             $participant->setRoles(["ROLE_USER"]);
+            $participant->setActif(1);
         }
 
-        $participant->setActif(1);
+
         $form = $this->createForm(RegistrationFormType::class, $participant);
         $form->handleRequest($request);
 

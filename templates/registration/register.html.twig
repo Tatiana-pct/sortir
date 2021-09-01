@@ -3,11 +3,76 @@
 {% block body %}
     <h2>Cree un utilisateur</h2>
 
-    {{ form_start(registrationForm) }}
+    <div>
+        {{ form_label(registrationForm.pseudo) }}
+        {{ form_widget(registrationForm.pseudo) }}
+        {{ form_errors(registrationForm.pseudo) }}
+    </div>
 
-    {{ form_widget(registrationForm) }}
+    <div>
+        {{ form_label(registrationForm.prenom) }}
+        {{ form_widget(registrationForm.prenom) }}
+        {{ form_errors(registrationForm.prenom) }}
+    </div>
 
-    {{ form_end(registrationForm) }}
+    <div>
+        {{ form_label(registrationForm.nom) }}
+        {{ form_widget(registrationForm.nom) }}
+        {{ form_errors(registrationForm.nom) }}
+    </div>
+
+    <div>
+        {{ form_label(registrationForm.telephone) }}
+        {{ form_widget(registrationForm.telephone) }}
+        {{ form_errors(registrationForm.telephone) }}
+    </div>
+
+    <div>
+        {{ form_label(registrationForm.email) }}
+        {{ form_widget(registrationForm.email) }}
+        {{ form_errors(registrationForm.email) }}
+    </div>
+
+    <div>
+        {{ form_label(registrationForm.motDePasse) }}
+        {{ form_widget(registrationForm.motDePasse) }}
+        {{ form_errors(registrationForm.motDePasse) }}
+    </div>
+
+    <div>
+        {{ form_label(registrationForm.campus) }}
+        {{ form_widget(registrationForm.campus) }}
+        {{ form_errors(registrationForm.campus) }}
+    </div>
+
+    {% if is_granted("ROLE_ADMIN") %}
+
+        <div>
+            {{ form_label(registrationForm.administrateur) }}
+            {{ form_widget(registrationForm.administrateur) }}
+            {{ form_errors(registrationForm.administrateur) }}
+        </div>
+
+        <div>
+            {{ form_label(registrationForm.actif) }}
+            {{ form_widget(registrationForm.actif) }}
+            {{ form_errors(registrationForm.actif) }}
+        </div>
+    {% endif %}
+
+    <div>
+        {{ form_label(registrationForm.enregistrer) }}
+        {{ form_widget(registrationForm.enregistrer) }}
+
+    </div>
+
+    <div>
+        {{ form_label(registrationForm.annuler) }}
+        {{ form_widget(registrationForm.annuler) }}
+    </div>
+
+
+
 {% endblock %}
 
 {% block title %}Register | {{ parent() }}{% endblock %}
