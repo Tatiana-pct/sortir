@@ -25,7 +25,8 @@ class SortieFormType extends AbstractType
             ->add('nom',
                   null,
                   [
-                      'label'=>'Nom de la sortie'
+                      'label'=>'Nom de la sortie',
+                      'data' => 'Veuillez nommer la sortie',
                   ])
 
             ->add('dateHeureDebut',
@@ -35,6 +36,7 @@ class SortieFormType extends AbstractType
                       'html5' => true,
                       'widget' => 'single_text',
                       'years' => range('now',2022),
+                      'data' => new \DateTime("+ 1 day")
                   ])
 
             ->add('duree',
@@ -50,9 +52,9 @@ class SortieFormType extends AbstractType
                   DateType::class,
                   [
                       'widget' => 'single_text',
-                      // 'format' => 'dd/MM/yyyy HH:mm',
                       'html5' => true,
-                      'label'=>'Date limite d\'inscription'
+                      'label'=>'Date limite d\'inscription',
+                      'data' => new \DateTime("+ 2 day")
                   ])
 
             ->add('nbInscriptionsMax',

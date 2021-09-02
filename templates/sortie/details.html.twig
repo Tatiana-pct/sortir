@@ -79,7 +79,7 @@
         {% endif %}
         {% if app.user in sortie.inscrits %}
             <a href="{{ path('sortie_desister', {'id':sortie.id}) }}">Se désinscrire</a>
-        {% elseif app.user not in sortie.inscrits %}
+        {% elseif app.user not in sortie.inscrits and sortie.inscrits.count < sortie.nbInscriptionsMax %}
             <a href="{{ path('sortie_inscription', {'id':sortie.id}) }}">S'inscrire</a>
         {% endif %}
         {% if app.user == sortie.organisateur %}
