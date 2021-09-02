@@ -16,7 +16,9 @@ header {
 
 
 header h1 {
-    margin: 0 0 10px 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 150px;
 }
 
 
@@ -33,20 +35,23 @@ header nav a:hover {
     cursor: pointer;
 }
 
-.header-logo {
-    font-size: 3rem;
-    font-weight: normal;
-}
 
 .header-logo img {
-    max-width: 20px;
-    margin-right: 3px;
-    margin-top: 3px;
+    width: auto ;
+    margin: auto;
     background-color: darkcyan;
+}
+.logo-titre a {
+    width: auto;
+    background: darkcyan;
+}
+
+.logo-titre a:hover {
+    background-color: lightgoldenrodyellow;
+    transition: all 3s ;
 }
 
 .header-nav {
-
     display: flex;
 }
 nav ul{
@@ -169,6 +174,7 @@ tr,th
     color: white;
 }
 
+/* Hide the link that should open and close the topnav on small screens */
 .topnav .icon {
     display: none;
 }
