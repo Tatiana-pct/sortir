@@ -10,7 +10,7 @@ body{
 
 
 header {
-    background-color: #26ade7;
+    background-color: darkcyan;
     padding: 0.5rem 0;
 }
 
@@ -42,6 +42,7 @@ header nav a:hover {
     max-width: 20px;
     margin-right: 3px;
     margin-top: 3px;
+    background-color: darkcyan;
 }
 
 .header-nav {
@@ -110,7 +111,7 @@ th {
 footer {
     padding: 2rem 0;
     text-align: center;
-    background-color: #26ade7;
+    background-color: darkcyan;
     color: black;
 }
 .imgProfil
@@ -148,21 +149,24 @@ tr,th
 .topnav a {
     float: left;
     display: flex;
-    color: black;
     text-align: center;
     padding: 14px 16px;
-    text-decoration: none;
     font-size: 17px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 600ms all;
+    transform: rotate3d(3, 3, 3, 10deg);
 }
 
 /* Change the color of links on hover */
 .topnav a:hover {
-    background-color: lightblue;
+    background-color: lightgoldenrodyellow;
     text-decoration: none;
 
 }
 
-/* Add an active class to highlight the current page */
+/* Add an active class to highlight the current page*/
 .topnav a.active {
     background-color: cornflowerblue;
     color: white;
@@ -171,4 +175,8 @@ tr,th
 /* Hide the link that should open and close the topnav on small screens */
 .topnav .icon {
     display: none;
+}
+
+main {
+    text-align: justify-all;
 }
