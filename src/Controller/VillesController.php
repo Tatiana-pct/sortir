@@ -47,7 +47,7 @@ class VillesController extends AbstractController
         $rechercheVilleForm->handleRequest($request);
 
 
-        //validation du formulaire de recherched'une ville
+        //validation du formulaire de recherche d'une ville
         if ($rechercheVilleForm->isSubmitted()&&$rechercheVilleForm->isValid()){
             $entityManager->persist($Ville);
             $entityManager->flush();
