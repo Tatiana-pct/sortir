@@ -9,19 +9,19 @@
     <title>{% block title %} Sortir.com {% endblock %}</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/nomalize.css') }}">
+    <link rel="stylesheet" media="screen and (max-width: 900px)" href="{{ asset('css/responsive.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rampart+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('image/logo-eni-ecole.png') }}">
-    <link rel="icon" href="{{ asset('image/images.png') }}">
+    <link rel="icon" href="{{ asset('image/image_processing20200219-3863-14h1dgg.gif') }}">
 </head>
 <body>
 <div class="container">
 
     <header>
         <div class="logo">
-            <div>
-                <a href="{{ path('main_home') }}"><img alt="logo" src="{{asset('image/logo-sortir_2x-0087abb548-removebg-preview-removebg-preview.png')}}"></a>
+            <div class="logo-titre">
+                <a href="{{ path('main_home') }}"><img style="width: 50%" alt="logo" src="{{asset('image/logo-sortir_2x-0087abb548-removebg-preview-removebg-preview.png')}}"></a>
             </div>
             <div class="link">{% include('inc/nav.html.twig') %}</div>
 
