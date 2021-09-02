@@ -115,7 +115,7 @@ class ResetPasswordController extends AbstractController
             // Encode the plain password, and set it.
             $encodedPassword = $passwordEncoder->encodePassword(
                 $participant,
-                $form->get('plainPassword')->getData()
+                $form->get('motDePasse')->getData()
             );
 
             $participant->setPassword($encodedPassword);

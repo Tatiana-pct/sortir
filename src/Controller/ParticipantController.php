@@ -34,16 +34,21 @@ class ParticipantController extends AbstractController
 
 
     /**
-     * @Route ("/delete/{id}", name="delete")
+     * @Route ("/delete/id}", name="delete")
      */
-    public function delete(Participant            $participant,
+    public function delete(Participant $participant,
                            EntityManagerInterface $entityManager): Response
     {
 
-        $img = $participant->getImage();
-        $nomeImg = $img->getNom();
+        if($participant->getImage()) {
+            $img = $participant->getImage();
+            $nomeImg=$img->getNom();
 
-        unlink('../public/image/imagesProfil/' . $nomeImg);
+            if ($nomeImg=$img->getNom()) {
+                unlink('../public/image/imagesProfil/' . $nomeImg);
+            }
+        }
+
 
         $entityManager->remove($participant);
         $entityManager->flush();
@@ -55,18 +60,18 @@ class ParticipantController extends AbstractController
     /**
      * @Route("/details/{id}", name="details")
      */
-    public function details(int                   $id,
+    public function details(int $id,
                             ParticipantRepository $participantRepository,
-                            UserInterface         $user): Response
+                            UserInterface $user): Response
     {
-        $user = $this->getUser();
+        $user=$this->getUser();
         $participant = $participantRepository->find($id);
         if (!$participant) {
             throw $this->createNotFoundException('!');
         }
 
         return $this->render('participant/details.html.twig', ["participant" => $participant,
-            "user" => $user]);
+            "user"=>$user]);
     }
 
 
@@ -82,19 +87,26 @@ class ParticipantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-//TODO: problème si pas d'image
+            if ($form->isValid()){
 
-                $file = $form->get('image')->getData()->getFile();
-                $nomImage = md5(uniqid()) . '.' . $participant->getPseudo() . '.' . $file->guessExtension();
+                if ($form->get('image')->getData()) {
 
-                $file->move('../public/image/imagesProfil', $nomImage);
+                    $file = $form->get('image')->getData()->getFile();
 
-                $image = new Image();
+                    if (!$file) {
 
-                $participant->getImage($image);
-                $image->setNom($nomImage);
-                $participant->setImage($image);
+                        $participant->setImage(null);
+                    } else {
+                        $nomImage = md5(uniqid()) . '.' . $participant->getPseudo() . '.' . $file->guessExtension();
+                        $file->move('../public/image/imagesProfil', $nomImage);
+
+                        $image = new Image();
+
+                        $participant->getImage($image);
+                        $image->setNom($nomImage);
+                        $participant->setImage($image);
+                    }
+                }
 
 
                 $em->persist($user);
@@ -111,7 +123,7 @@ class ParticipantController extends AbstractController
         return $this->render('participant/modifier.html.twig', [
             'registrationForm' => $form->createView(),
             'user' => $user,
-            'participant' => $participant
+            'participant'=>$participant
 
         ]);
     }

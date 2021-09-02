@@ -26,6 +26,7 @@ class ParticipantType extends AbstractType
                 'choice_label' => 'nom'
             ])
             ->add('image', ImageType::class, [
+                'required'=> false,
                 'label'=>false,
             ])
             ->add('submit', SubmitType::class, ['label' => 'OK'])

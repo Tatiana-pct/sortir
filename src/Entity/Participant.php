@@ -91,7 +91,6 @@ class Participant implements UserInterface
     private $Pseudo;
 
     /**
-     * @Assert\Image()
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist","remove"})
      */
     private $image;
@@ -274,7 +273,6 @@ class Participant implements UserInterface
      */
     public function eraseCredentials()
     {
-
     }
 
     public function setRoles(array $roles): self

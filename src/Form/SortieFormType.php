@@ -34,7 +34,7 @@ class SortieFormType extends AbstractType
                       'label'=>'Date et heure de la sortie',
                       'html5' => true,
                       'widget' => 'single_text',
-                      'years' => range(2021,2022),
+                      'years' => range('now',2022),
                   ])
 
             ->add('duree',
@@ -42,8 +42,8 @@ class SortieFormType extends AbstractType
                   [
                       'label' => 'Durée en minutes',
                       'attr' => [
-                          'min' => '60',
-                          'max' => '1440'],
+                          'min' => '15',
+                          'max' => '120'],
                   ])
 
             ->add('dateLimiteInscription',

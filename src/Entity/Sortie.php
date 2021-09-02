@@ -6,7 +6,6 @@ use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SortieRepository::class)
@@ -21,32 +20,21 @@ class Sortie
     private $id;
 
     /**
-     *@Assert\NotBlank(message="Veuillez donner un nom à la sortie !")
-     *@Assert\Length(
-     *     min=2,
-     *     minMessage="2 caractères minimum svp !",
-     *     max=255,
-     *     maxMessage="255 caractères minimum svp !"
-     * )
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
-     * @Assert\GreaterThan("today", message="La date de début de la sortie doit être dans le futur")
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateHeureDebut;
 
     /**
-     * @Assert\GreaterThanOrEqual(1, message="La sortie doit durer au moins une heure !")
-     * @Assert\LessThanOrEqual(168, message="La sortie doit durer au maximum 1440 min (Une journée) !")
      * @ORM\Column(type="integer", nullable=true)
      */
     private $duree;
 
     /**
-     * @Assert\LessThanOrEqual(propertyPath="dateHeureDebut", message="La date de fin des inscriptions doit être avant le début de la sortie !")
      * @ORM\Column(type="datetime")
      */
     private $dateLimiteInscription;
@@ -92,7 +80,6 @@ class Sortie
     public function __construct()
     {
         $this->inscrits = new ArrayCollection();
-
     }
 
     public function getId(): ?int

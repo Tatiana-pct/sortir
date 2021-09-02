@@ -31,10 +31,9 @@ class RegistrationController extends AbstractController
             $participant->setRoles(["ROLE_ADMIN"]);
         } else {
             $participant->setRoles(["ROLE_USER"]);
-            $participant->setActif(1);
         }
 
-
+        $participant->setActif(1);
         $form = $this->createForm(RegistrationFormType::class, $participant);
         $form->handleRequest($request);
 
@@ -48,17 +47,17 @@ class RegistrationController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             //gestion image
 
-            $file=$form->get('image')->getData()->getFile();
-            $nomImage = md5(uniqid()). '.'.$participant->getPseudo(). '.' .$file->guessExtension();
+            if ($form->get('image')->getData()) {
+                $file = $form->get('image')->getData()->getFile();
+                $nomImage = md5(uniqid()) . '.' . $participant->getPseudo() . '.' . $file->guessExtension();
 
-            $file->move('../public/image/imagesProfil', $nomImage);
+                $file->move('../public/image/imagesProfil', $nomImage);
 
-            $image= new Image();
-            $image->setNom($nomImage);
+                $image = new Image();
+                $image->setNom($nomImage);
 
-
-            $participant->setImage($image);
-
+                $participant->setImage($image);
+            }
             $entityManager->persist($participant);
             $entityManager->flush();
             // do anything else you need here, like send an email
