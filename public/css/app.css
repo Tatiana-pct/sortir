@@ -145,7 +145,6 @@ tr,th
     height: 20px;
 }
 
-/* Style the links inside the navigation bar */
 .topnav a {
     float: left;
     display: flex;
@@ -159,20 +158,17 @@ tr,th
     transform: rotate3d(3, 3, 3, 10deg);
 }
 
-/* Change the color of links on hover */
 .topnav a:hover {
     background-color: lightgoldenrodyellow;
     text-decoration: none;
 
 }
 
-/* Add an active class to highlight the current page*/
 .topnav a.active {
     background-color: cornflowerblue;
     color: white;
 }
 
-/* Hide the link that should open and close the topnav on small screens */
 .topnav .icon {
     display: none;
 }
