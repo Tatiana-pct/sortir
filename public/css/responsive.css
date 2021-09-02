@@ -1,0 +1,161 @@
+@media all and (max-width: 900px){
+    body{
+        margin: auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Rampart One', cursive;
+        background-color: ivory;
+
+    }
+
+
+    header {
+        background-color: darkcyan;
+        padding: 0.5rem 0;
+    }
+
+
+
+    header a {
+
+        text-decoration: none;
+        color: inherit;
+
+    }
+
+    header nav a:hover {
+        background-color: ivory;
+        text-decoration: underline;
+        cursor: grabbing;
+    }
+
+
+   .header-logo img {
+       width: 100%;
+       display: block;
+       border: 0;
+       justify-content: center;
+    }
+
+
+
+    main {
+        flex: 1;
+        padding: 1rem 0;
+        background-color:ivory;
+    }
+    label
+    {
+        padding: 1.5px;
+        display: block;
+        margin: 8px;
+    }
+
+    input,
+    textarea
+
+    {
+        margin-bottom: 3rem;
+        box-sizing: border-box;
+        width: auto;
+        max-width: 50%;
+    }
+
+
+    body> .container{
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    td {
+        border:darkgray solid;
+    }
+
+    th {
+        border: black solid;
+    }
+
+    .tab-filtre {
+        width: 96em;
+        border: black solid;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    footer {
+        padding: 2rem 0;
+        text-align: center;
+        background-color: darkcyan;
+        color: black;
+    }
+    .imgProfil
+    {
+        width: auto;
+        height: auto;
+
+    }
+    .imgProfilListe
+    {
+        width: auto;
+        height: auto;
+    }
+    .tableSortie
+    {
+        width: 90%;
+    }
+    .tableSortie,
+    tr
+    {
+        height: 80%;
+    }
+    .tableSortie,
+    tr,td
+    {
+        height: 20px;
+    }
+    .tableSortie,
+    tr,th
+    {
+        height: 20px;
+    }
+
+    /* Style the links inside the navigation bar */
+    .topnav a {
+        float: left;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        padding: 14px 16px;
+        font-size: 17px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: 600ms all;
+        transform: rotate3d(3, 3, 3, 10deg);
+    }
+
+    /* Change the color of links on hover */
+    .topnav a:hover {
+        background-color: lightgoldenrodyellow;
+        text-decoration: none;
+
+    }
+
+    /* Add an active class to highlight the current page*/
+    .topnav a.active {
+        background-color: cornflowerblue;
+        color: white;
+    }
+
+    /* Hide the link that should open and close the topnav on small screens */
+    .topnav .icon {
+        display: none;
+    }
+
+    main {
+        text-align: justify-all;
+    }
+}
