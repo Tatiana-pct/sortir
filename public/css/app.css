@@ -58,8 +58,8 @@ nav ul{
 
     display: flex;
     list-style: none;
-    padding-left: 0;
     justify-content: left;
+    padding: 5px;
 
 }
 nav li{
@@ -70,7 +70,7 @@ nav li{
 
 main {
     flex: 1;
-    padding: 1rem 0;
+    padding: 5px;
     background-color:ivory;
 }
 label
