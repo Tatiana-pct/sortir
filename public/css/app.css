@@ -173,14 +173,14 @@ main {
     margin: auto;
 }
 
-@media all and (max-width: 1024px)
+@media all and (max-width: 800px)
 {
     #bloc_page
     {
         width: auto;
     }
 }
-@media all and (max-width: 1024px)
+@media all and (max-width: 800px)
 {
     nav
     {

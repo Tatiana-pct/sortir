@@ -31,11 +31,15 @@
                 {#TODO: et si participant affiché != de user - ?? {% if participant.id == user.id and participant.image is not defined%}  AJOUTER Image#}
 
                 <button><a href="{{ path('main_home') }}">Retour</a></button>
+                <div>
                 {% if is_granted("ROLE_ADMIN") and participant.id!=user.id %}
                     <a href="{{ path('participant_delete',{'id':participant.id})}}" title="Supprimer participant"><button>Supprimer</button></a>
                 {% endif %}
+                </div>
                 {%  if app.user.id == participant.id  %}
-                <a href="{{ path('participant_modifier', {'id':participant.id}) }}" title="Modifier mon profil">Modifier</a>
+                <div>
+                <a href="{{ path('participant_modifier', {'id':participant.id}) }}" title="Modifier mon profil">Modifier mon profil</a>
+                </div>
                 {% endif %}
             </div>
         </div>

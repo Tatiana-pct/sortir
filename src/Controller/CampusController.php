@@ -41,10 +41,10 @@ class CampusController extends AbstractController
             $entityManager->persist($Campus);
             $entityManager->flush();
 
-        //affichage d'un message lors du succes d'ajout d'une ville
+            //affichage d'un message lors du succes d'ajout d'une ville
             $this->addFlash('succes','Campus ajouté!');
 
-        //retirection vers la page
+            //retirection vers la page
             return $this->redirectToRoute('campus_liste');
         }
 
@@ -61,11 +61,11 @@ class CampusController extends AbstractController
             return $this->redirectToRoute('campus_liste');
         }
 
-            return $this->render('campus/list.html.twig', [
-                "Campus" => $campus,
-                "CampusForm" => $CampusForm->createView(),
+        return $this->render('campus/list.html.twig', [
+            "Campus" => $campus,
+            "CampusForm" => $CampusForm->createView(),
 
-            ]);
+        ]);
 
     }
 

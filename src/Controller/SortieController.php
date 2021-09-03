@@ -58,8 +58,6 @@ class SortieController extends AbstractController
                 if ($sortie->getDateHeureDebut() == ($sortie->getDateHeureDebut()->add($dureeSortie))) {
                     $sortie->setEtat($em->getRepository(Etat::class)->findOneBy(['libelle' => 'Archivée']));
                 }
-                $manager->persist($sortie);
-                $manager->flush();
             }
         }
 

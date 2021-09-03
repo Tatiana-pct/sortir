@@ -34,10 +34,10 @@ class VillesController extends AbstractController
             $entityManager->persist($Ville);
             $entityManager->flush();
 
-        //affichage d'un message lors du succes d'ajout d'une ville
+            //affichage d'un message lors du succes d'ajout d'une ville
             $this->addFlash('succes','Ville ajoutée!');
 
-        //retirection de donne vers la page
+            //retirection de donne vers la page
             return $this->redirectToRoute('villes_liste');
         }
 
@@ -52,10 +52,9 @@ class VillesController extends AbstractController
             $entityManager->persist($Ville);
             $entityManager->flush();
 
-        //rediection de la reponse
+            //rediection de la reponse
             return $this->redirectToRoute('villes_liste',["villes" => $ville]);
         }
-
 
         return $this->render('villes/list.html.twig',[
             "ville" => $ville,
@@ -63,9 +62,6 @@ class VillesController extends AbstractController
             'rechercheVilleForm'=> $rechercheVilleForm-> createView()
 
         ]);
-
-
-
     }
 
 
