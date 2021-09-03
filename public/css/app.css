@@ -46,10 +46,6 @@ header nav a:hover {
     background: darkcyan;
 }
 
-.logo-titre a:hover {
-    background-color: lightgoldenrodyellow;
-    transition: all 3s ;
-}
 
 .header-nav {
     display: flex;
