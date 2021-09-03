@@ -13,21 +13,13 @@
         <br>
         <button>Rechercher</button>
 
-
-
-
-
         <table  style="width:100%">
             <thead>
             <th>
             <td >nom</td>
             <td >code postale</td>
-
-
             {% if is_granted('ROLE_ADMIN') %}
-
                 <td >Action</td>
-
             {% endif %}
 
             </th>
@@ -52,7 +44,7 @@
                 {% endfor %}
             {% else %}
                 <tr >
-                    <th scope="row" colspan="4">Aucun ville trouvé...</th>
+                    <th>Aucun ville trouvé...</th>
                 </tr>
             {% endif %}
             </tbody>
