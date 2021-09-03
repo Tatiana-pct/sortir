@@ -24,10 +24,8 @@
         <div class="logo">
             <div class="logo-titre">
                 <a href="{{ path('main_home') }}"><img style="width: 30%" alt="logo" src="{{asset('image/logo-sortir_2x-0087abb548-removebg-preview-removebg-preview.png')}}"></a>
-
             </div>
             <div class="link">{% include('inc/nav.html.twig') %}</div>
-
         </div>
     </header>
 
@@ -42,9 +40,8 @@
         {% endfor %}
         {% block body %} {% endblock %}
     </main>
-
     <footer>
-        © {{ "now"|date("Y") }} Sortie.com - Projet ENI/2 - Nicolas Reymond/Jean-marc Vetu/Tatiana Pocquet
+        © {{ "now"|date("Y") }} Sortie.com<br> - Projet ENI/2 - <br>Nicolas Reymond/Jean-marc Vetu/Tatiana Pocquet
     </footer>
 </div>
 </body>

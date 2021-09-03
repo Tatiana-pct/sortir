@@ -1,70 +1,70 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<section>
-    <div>
-
-        {{ form_start(sortiesform) }}
-
-        {{ form_widget(sortiesform) }}
-        <br><button type="submit">Rechercher</button>
-        {{ form_end(sortiesform) }}
-
-    </div><br>
-</section>
-<div>
     <section>
-        <table>
-            <tr>
-                <th>Nom de la sortie</th>
-                <th>Date de la sortie</th>
-                <th>Clôture</th>
-                <th>Inscrits/places</th>
-                <th>Etat</th>
-                <th>Inscrit</th>
-                <th>Organisateur</th>
-                <th>Actions</th>
-            </tr>
+        <div>
 
-            {% for sortie in sorties %}
-                {% if sortie.etat.id != 6 %}
-            <tr>
-                <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.dateHeureDebut.format('d/m/Y H:i') }}</td>
-                <td>{{ sortie.dateLimiteInscription.format('d/m/Y') }}</td>
-                <td>{{ sortie.inscrits.count}} / {{ sortie.nbInscriptionsMax }}</td>
-                <td>{{ sortie.etat.libelle }}</td>
-                <td>
-                    {% if app.user in sortie.inscrits %}
-                        Inscrit
-                    {% else %}
-                        Non-inscrit
-                    {% endif %}
-                </td>
-                <td><a href="{{ path('participant_details', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
-                <td>
-                    <a href="{{ path('sortie_details', {'id': sortie.id}) }}">Afficher</a>
-                    {% if sortie.etat.id == 2 %}
-                        {% if app.user not in sortie.inscrits %}
-                            <a href="{{ path('sortie_inscription', {'id':sortie.id}) }}">S'inscrire</a>
-                        {% elseif app.user in sortie.inscrits %}
-                            <a href="{{ path('sortie_desister', {'id':sortie.id}) }}">Se désinscrire</a>
+            {{ form_start(sortiesform) }}
+
+            {{ form_widget(sortiesform) }}
+            <br><button type="submit">Rechercher</button>
+            {{ form_end(sortiesform) }}
+
+        </div><br>
+    </section>
+    <div>
+        <section>
+            <table>
+                <tr>
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Clôture</th>
+                    <th>Inscrits/places</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>Actions</th>
+                </tr>
+
+                {% for sortie in sorties %}
+                    {% if sortie.etat.id != 6 %}
+                        <tr>
+                        <td>{{ sortie.nom }}</td>
+                        <td>{{ sortie.dateHeureDebut.format('d/m/Y H:i') }}</td>
+                        <td>{{ sortie.dateLimiteInscription.format('d/m/Y') }}</td>
+                        <td>{{ sortie.inscrits.count}} / {{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.etat.libelle }}</td>
+                        <td>
+                            {% if app.user in sortie.inscrits %}
+                                Inscrit
+                            {% else %}
+                                Non-inscrit
+                            {% endif %}
+                        </td>
+                        <td><a href="{{ path('participant_details', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
+                        <td>
+                        <a href="{{ path('sortie_details', {'id': sortie.id}) }}">Afficher</a>
+                        {% if sortie.etat.id == 2 %}
+                            {% if app.user not in sortie.inscrits %}
+                                <a href="{{ path('sortie_inscription', {'id':sortie.id}) }}">S'inscrire</a>
+                            {% elseif app.user in sortie.inscrits %}
+                                <a href="{{ path('sortie_desister', {'id':sortie.id}) }}">Se désinscrire</a>
+                            {% endif %}
+                        {% endif %}
+                        {% if app.user.roles == 'ROLE_ADMIN' or sortie.organisateur.id == app.user.id %}
+                            <a href="{{ path('sortie_delete', {'id':sortie.id}) }}">Supprimer la sortie</a>
+                            {% if sortie.etat.id  == 1 %}
+                                <a href="{{ path('sortie_publier',{'id':sortie.id}) }}">Publier la sortie</a>
+                            {% endif %}
                         {% endif %}
                     {% endif %}
-                    {% if app.user.roles == 'ROLE_ADMIN' or sortie.organisateur.id == app.user.id %}
-                        <a href="{{ path('sortie_delete', {'id':sortie.id}) }}">Supprimer la sortie</a>
-                        {% if sortie.etat.id  == 1 %}
-                            <a href="{{ path('sortie_publier',{'id':sortie.id}) }}">Publier la sortie</a>
-                        {% endif %}
-                    {% endif %}
-{% endif %}
-            </tr>
-            {% endfor %}
+                    </tr>
+                {% endfor %}
 
-        </table>
-    </section><br>
-    {% if app.user.roles %}
-        <a href="{{ path('sortie_create') }}">Créer une sortie</a>
-    {% endif %}
-</div>
+            </table>
+        </section><br>
+        {% if app.user.roles %}
+            <a href="{{ path('sortie_create') }}">Créer une sortie</a>
+        {% endif %}
+    </div>
 {% endblock %}
