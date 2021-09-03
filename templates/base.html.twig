@@ -7,9 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>{% block title %} Sortir.com {% endblock %}</title>
+
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/nomalize.css') }}">
     <link rel="stylesheet" media="screen and (max-width: 900px)" href="{{ asset('css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/nomalize.css') }}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rampart+One&display=swap" rel="stylesheet">
@@ -28,7 +30,7 @@
         </div>
     </header>
 
-
+<div class="container"></div>
     <main>
         {% for label, messages in app.flashes %}
             {% for message in messages %}
@@ -41,7 +43,7 @@
     </main>
 
     <footer>
-        © {{ "now"|date("Y") }} Sorti.com - Projet ENI/2 - Nicolas Reymond/Jean-marc Vetu/Tatiana Pocquet
+        © {{ "now"|date("Y") }} Sortie.com - Projet ENI/2 - Nicolas Reymond/Jean-marc Vetu/Tatiana Pocquet
     </footer>
 </div>
 </body>

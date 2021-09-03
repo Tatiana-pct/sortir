@@ -102,7 +102,6 @@ class ParticipantController extends AbstractController
 
                         $image = new Image();
 
-                        $participant->getImage($image);
                         $image->setNom($nomImage);
                         $participant->setImage($image);
                     }
