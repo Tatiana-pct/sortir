@@ -69,7 +69,8 @@ main {
     padding: 5px;
     background-color:ivory;
 }
-label
+label,
+checkbox
 {
     padding: 1.5px;
     display: block;

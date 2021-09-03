@@ -29,6 +29,9 @@ class VillesController extends AbstractController
         $VilleForm =$this->createForm(VillesType::class,$Ville);
         $VilleForm->handleRequest($request);
 
+        //affichage d'un message lors du succes d'ajout d'une ville
+        $this->addFlash('succes','La Ville a bien été ajoutée!');
+
         //validation du formulaire d'ajout d'une ville
         if($VilleForm->isSubmitted() && $VilleForm->isValid()) {
             $entityManager->persist($Ville);
